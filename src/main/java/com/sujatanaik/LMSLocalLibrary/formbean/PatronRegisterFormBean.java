@@ -61,3 +61,7 @@ public class PatronRegisterFormBean {
     @Pattern(regexp = "[0-9]{10}", message = "Please enter a valid phone number using 10 digits.")
     private String phone;
 }
+
+// TODO password match validator (discord - spring-boot-resources) Steven 4/14
+// TODO field match validator (discord - spring-boot-resources) Xu Huang 4/14
+// TODO check OWASP site

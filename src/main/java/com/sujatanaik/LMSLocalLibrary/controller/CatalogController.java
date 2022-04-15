@@ -1,7 +1,11 @@
 package com.sujatanaik.LMSLocalLibrary.controller;
 
 import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
+import com.sujatanaik.LMSLocalLibrary.database.dao.UserBookDAO;
+import com.sujatanaik.LMSLocalLibrary.database.dao.UserDAO;
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
+import com.sujatanaik.LMSLocalLibrary.database.entity.User;
+import com.sujatanaik.LMSLocalLibrary.database.entity.UserBook;
 import com.sujatanaik.LMSLocalLibrary.formbean.AddBookFormBean;
 import com.sujatanaik.LMSLocalLibrary.formbean.SearchFormBean;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +28,13 @@ public class CatalogController {
 
     @Autowired
     private BookDAO bookDao;
+
+    @Autowired
+    private UserBookDAO userBookDao;
+
+    @Autowired
+    private UserDAO userDao;
+
     /**
      * This method handles the localhost:8080/goodreads
      * This is the "good reads" (recommendations) page of the library management system.
@@ -126,6 +137,79 @@ public class CatalogController {
         response.addObject("search", search);
 
         response.setViewName("user/usersearch");
+
+        return response;
+    }
+
+    @GetMapping(value="/catalog/checkedoutbyuser")
+    public ModelAndView searchCheckedOutByUser(@RequestParam(required=false, name="search") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In CatalogController - searchCheckedOutByUser()");
+
+        User theUser = userDao.findByEmail(search);
+
+        List<UserBook> userbooks = new ArrayList<>();
+
+        if (!StringUtils.isBlank(search)) {
+            userbooks = userBookDao.findUserBooksByUserId(theUser.getId());
+            response.addObject("userbooks", userbooks);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminsearch");
+
+        return response;
+    }
+
+    @GetMapping(value="/catalog/availabletitles")
+    public ModelAndView searchAvailableTitles(@RequestParam(required=false, name="search") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In CatalogController - searchAvailableTitles()");
+
+        List<Book> availablebooks = new ArrayList<>();
+
+        if (!StringUtils.isBlank(search)) {
+            availablebooks = bookDao.findBookByTitleAndAvailable(search);
+            response.addObject("availablebooks", availablebooks);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminsearch");
+
+        return response;
+    }
+
+    @GetMapping(value="/catalog/checkedouttitles")
+    public ModelAndView searchCheckedOutTitles(@RequestParam(required=false, name="search") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In CatalogController - searchCheckedOutTitles()");
+
+        Book theBook = bookDao.findDistinctByTitle(search);
+
+        List<UserBook> checkedoutBook;
+
+        if (!StringUtils.isBlank(search)) {
+            checkedoutBook = userBookDao.findUserBooksByTitle(theBook.getId());
+            response.addObject("checkedoutuserbooks", checkedoutBook);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminsearch");
 
         return response;
     }

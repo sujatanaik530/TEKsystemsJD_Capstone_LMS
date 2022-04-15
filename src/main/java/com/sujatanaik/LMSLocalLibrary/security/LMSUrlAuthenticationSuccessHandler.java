@@ -52,7 +52,7 @@ public class LMSUrlAuthenticationSuccessHandler implements AuthenticationSuccess
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
         roleTargetUrlMap.put("USER", "/user/usersearch");
-        roleTargetUrlMap.put("ADMIN", "/admin/admindash");
+        roleTargetUrlMap.put("ADMIN", "/admin/adminsearch");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {

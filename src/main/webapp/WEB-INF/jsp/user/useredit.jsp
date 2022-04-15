@@ -21,8 +21,12 @@
                 <i class="fa-solid fa-book"></i>&nbsp;&nbsp;The Local Library
             </a>
             <sec:authorize access="isAuthenticated()">
+                <em><sec:authentication property="principal.username"></sec:authentication></em>&nbsp;&nbsp;&nbsp;&nbsp;
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <a href="/admin/adminsearch"><i class="fa-solid fa-user-lock" title="Switch to your administrator account"></i></a>
+                </sec:authorize>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/login/logout" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-                &nbsp;&nbsp;<em><sec:authentication property="principal.username"></sec:authentication></em>
             </sec:authorize>
         </div>
     </nav>

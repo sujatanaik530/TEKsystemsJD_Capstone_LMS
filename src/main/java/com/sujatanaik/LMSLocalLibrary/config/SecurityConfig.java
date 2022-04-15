@@ -73,3 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new LMSUrlAuthenticationSuccessHandler();
     }
 }
+
+// TODO auto-login on registration? https://www.baeldung.com/spring-security-auto-login-user-after-registration
+

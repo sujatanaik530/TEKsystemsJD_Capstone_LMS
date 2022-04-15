@@ -21,11 +21,28 @@ import java.util.List;
 @Controller
 public class AdminController {
 
-    @RequestMapping(value="/admin/admindash", method= RequestMethod.GET)
-    public ModelAndView admindashboard() throws Exception {
+    @RequestMapping(value="/admin/adminsearch", method= RequestMethod.GET)
+    public ModelAndView adminsearch() throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In AdminController - admindashboard()");
-        response.setViewName("admin/admindash");
+        log.info("In AdminController - adminsearch()");
+        response.setViewName("admin/adminsearch");
+        return response;
+    }
+
+    @RequestMapping(value="/admin/adminuser", method= RequestMethod.GET)
+    public ModelAndView adminuser() throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In AdminController - adminuser()");
+        response.setViewName("admin/adminuser");
+        return response;
+    }
+
+    @RequestMapping(value="/admin/adminbook", method= RequestMethod.GET)
+    public ModelAndView adminbook() throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In AdminController - adminbook()");
+        response.setViewName("admin/adminbook");
         return response;
     }
 }
+// TODO add an errorcontroller
