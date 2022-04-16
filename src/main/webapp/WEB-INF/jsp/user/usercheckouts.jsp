@@ -53,6 +53,7 @@
             </div>
             <br />
         </c:if>
+        <c:if test="${not empty borrowed}">
         <table class="table" id="myTable" style="margin: auto; background: white;">
             <thead class="table-dark">
             <tr>
@@ -88,6 +89,7 @@
             </tr>
             </tfoot>
         </table>
+        </c:if>
         <br/>
     </div>
 </div>

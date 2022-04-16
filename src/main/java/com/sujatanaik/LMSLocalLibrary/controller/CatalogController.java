@@ -75,6 +75,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByTitleIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
             response.addObject("books", books);
         }
         else {
@@ -98,6 +101,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByAuthorIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
             response.addObject("books", books);
         }
         else {
@@ -121,6 +127,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByCategoryIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
             response.addObject("books", books);
         }
         else {
@@ -146,6 +155,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             userbooks = userBookDao.findUserBooksByEmail(search);
+            if (userbooks.isEmpty()) {
+                response.addObject("message", "Your search for books checked out by \"" + search + "\" returned no results");
+            }
             response.addObject("userbooks", userbooks);
         }
         else {
@@ -169,6 +181,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             availablebooks = bookDao.findBookByTitleAndAvailable(search);
+            if (availablebooks.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" in available books returned no results");
+            }
             response.addObject("availablebooks", availablebooks);
         }
         else {
@@ -192,6 +207,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             checkedoutBook = userBookDao.findUserBooksByTitle(search);
+            if (checkedoutBook.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" in checked out books returned no results");
+            }
             response.addObject("checkedoutuserbooks", checkedoutBook);
         }
         else {
@@ -215,6 +233,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             availablebooks = bookDao.findBookByAuthorAndAvailable(search);
+            if (availablebooks.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" in available books returned no results");
+            }
             response.addObject("availableauthors", availablebooks);
         }
         else {
@@ -238,6 +259,9 @@ public class CatalogController {
 
         if (!StringUtils.isBlank(search)) {
             checkedoutBook = userBookDao.findUserBooksByAuthor(search);
+            if (checkedoutBook.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" in checked out books returned no results");
+            }
             response.addObject("checkedoutauthors", checkedoutBook);
         }
         else {

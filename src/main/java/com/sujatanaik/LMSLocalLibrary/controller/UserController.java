@@ -166,6 +166,12 @@ public class UserController {
 
         List<UserBook> userBooks = userBookDao.findByUserId(loggedInUser.getId());
 
+        if (userBooks.isEmpty()) {
+            response.addObject("message", "You do not have any books checked out.");
+            response.setViewName("user/usercheckouts");
+            return response;
+        }
+
         response.addObject("borrowed", userBooks);
 
         response.setViewName("user/usercheckouts");
@@ -258,6 +264,8 @@ public class UserController {
 
         List<UserBook> userBooks = userBookDao.findByUserId(loggedInUser.getId());
 
+        response.addObject("message", "You checked out " + theBook.getTitle());
+
         response.addObject("borrowed", userBooks);
 
         response.setViewName("user/usercheckouts");
@@ -292,6 +300,8 @@ public class UserController {
         userBookDao.save(theUserCheckout);
 
         List<UserBook> userBooks = userBookDao.findByUserId(loggedInUser.getId());
+
+        response.addObject("message", "You renewed " + theBook.getTitle() + ".");
 
         response.addObject("borrowed", userBooks);
 
@@ -330,6 +340,8 @@ public class UserController {
         borrowedBooksDao.save(theCheckout);
 
         List<UserBook> userBooks = userBookDao.findByUserId(loggedInUser.getId());
+
+        response.addObject("message", "You returned " + theBook.getTitle() + ".");
 
         response.addObject("borrowed", userBooks);
 

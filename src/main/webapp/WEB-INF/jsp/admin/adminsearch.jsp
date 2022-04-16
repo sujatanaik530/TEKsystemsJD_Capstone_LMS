@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <input type="text" class="form-control border border-2 border-dark" id="search"
-                           placeholder="Enter search term" name="search" value="${form.search}" />
+                           placeholder="Enter search term" name="search" value="${search}" />
                 </div>
                 <div class="col-md-4">
                     <select id="searchBy" class="form-select border border-2 border-dark" name="searchBy">
@@ -72,6 +72,15 @@
             </div>
         </form>
         <br />
+        <c:if test="${not empty message}">
+            <div id="libmsg">
+                <br/>
+                    ${message}
+                <br/>
+                <br/>
+            </div>
+            <br />
+        </c:if>
         <table class="table" style="margin: auto; background: white;" id="myTable">
             <thead class="table-dark">
             <c:if test="${not empty checkedoutuserbooks}">
