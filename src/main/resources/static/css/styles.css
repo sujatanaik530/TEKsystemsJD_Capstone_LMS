@@ -17,6 +17,12 @@ body {
     border: 2px solid;
 }
 
+#searchform {
+    width: 70%;
+    margin: auto;
+    background-color: white;
+}
+
 .hiddenMsg {
     display: none;
     color: red;

@@ -17,14 +17,12 @@ function goSearchResults() {
         let fullURL = "../catalog/checkedouttitles?search=" + searchText.value;
         location.assign(fullURL);
     }
+    else if (searchBy == "Available Authors") {
+        let fullURL = "../catalog/availableauthors?search=" + searchText.value;
+        location.assign(fullURL);
+    }
+    else if (searchBy == "Checked Out Authors") {
+        let fullURL = "../catalog/checkedoutauthors?search=" + searchText.value;
+        location.assign(fullURL);
+    }
 }
-
-//
-// // This is with button class = checkoutbook, table id = myTable, title column class = titlecol
-// $("#myTable").on('click', '.checkoutbook', function() {
-//     var self = $(this).closest("tr");
-//     var titlevalue = self.find(".titlecol").text();
-//     console.log("\nSearch Title = " + titlevalue);
-//     location.assign("../user/checkout?title=" + titlevalue);
-// });
-//

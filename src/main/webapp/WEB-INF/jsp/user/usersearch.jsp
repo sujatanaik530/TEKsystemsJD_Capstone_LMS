@@ -63,7 +63,7 @@
     <br/>
     <br/>
     <div class="form-group">
-        <form method="get" id="patronform" style="border:none;">
+        <form method="get" id="searchform" style="border:none;">
            <div class="row">
                 <div class="col-md-6">
                     <input type="text" class="form-control border border-2 border-dark" id="search"
@@ -84,12 +84,13 @@
         <br />
         <table class="table" style="margin: auto; background: white;" id="myTable">
             <thead class="table-dark">
-            <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Author</th>
-                <th></th>
-            </tr>
+            <c:if test="${not empty books}">
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody id="books">
             <c:forEach items="${books}" var="book">
@@ -111,6 +112,7 @@
                 <td class="foot"></td>
             </tr>
             </tfoot>
+            </c:if>
         </table>
         <br/>
     </div>

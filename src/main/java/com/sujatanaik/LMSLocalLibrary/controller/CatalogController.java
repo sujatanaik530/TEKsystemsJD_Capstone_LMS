@@ -4,10 +4,7 @@ import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.dao.UserBookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.dao.UserDAO;
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
-import com.sujatanaik.LMSLocalLibrary.database.entity.User;
 import com.sujatanaik.LMSLocalLibrary.database.entity.UserBook;
-import com.sujatanaik.LMSLocalLibrary.formbean.AddBookFormBean;
-import com.sujatanaik.LMSLocalLibrary.formbean.SearchFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Controller
@@ -31,9 +27,6 @@ public class CatalogController {
 
     @Autowired
     private UserBookDAO userBookDao;
-
-    @Autowired
-    private UserDAO userDao;
 
     /**
      * This method handles the localhost:8080/goodreads
@@ -78,7 +71,7 @@ public class CatalogController {
 
         log.info("In CatalogController - searchByTitle()");
 
-        List<Book> books = new ArrayList<>();
+        List<Book> books;
 
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByTitleIgnoreCaseContaining(search);
@@ -147,12 +140,12 @@ public class CatalogController {
 
         log.info("In CatalogController - searchCheckedOutByUser()");
 
-        User theUser = userDao.findByEmail(search);
+        //User theUser = userDao.findByEmail(search);
 
         List<UserBook> userbooks = new ArrayList<>();
 
         if (!StringUtils.isBlank(search)) {
-            userbooks = userBookDao.findUserBooksByUserId(theUser.getId());
+            userbooks = userBookDao.findUserBooksByEmail(search);
             response.addObject("userbooks", userbooks);
         }
         else {
@@ -195,13 +188,57 @@ public class CatalogController {
 
         log.info("In CatalogController - searchCheckedOutTitles()");
 
-        Book theBook = bookDao.findDistinctByTitle(search);
+        List<UserBook> checkedoutBook;
+
+        if (!StringUtils.isBlank(search)) {
+            checkedoutBook = userBookDao.findUserBooksByTitle(search);
+            response.addObject("checkedoutuserbooks", checkedoutBook);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminsearch");
+
+        return response;
+    }
+
+    @GetMapping(value="/catalog/availableauthors")
+    public ModelAndView searchAvailableAuthors(@RequestParam(required=false, name="search") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In CatalogController - searchAvailableAuthors()");
+
+        List<Book> availablebooks = new ArrayList<>();
+
+        if (!StringUtils.isBlank(search)) {
+            availablebooks = bookDao.findBookByAuthorAndAvailable(search);
+            response.addObject("availableauthors", availablebooks);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminsearch");
+
+        return response;
+    }
+
+    @GetMapping(value="/catalog/checkedoutauthors")
+    public ModelAndView searchCheckedOutAuthors(@RequestParam(required=false, name="search") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In CatalogController - searchCheckedOutAuthors()");
 
         List<UserBook> checkedoutBook;
 
         if (!StringUtils.isBlank(search)) {
-            checkedoutBook = userBookDao.findUserBooksByTitle(theBook.getId());
-            response.addObject("checkedoutuserbooks", checkedoutBook);
+            checkedoutBook = userBookDao.findUserBooksByAuthor(search);
+            response.addObject("checkedoutauthors", checkedoutBook);
         }
         else {
             log.info("Search term cannot be empty!");
