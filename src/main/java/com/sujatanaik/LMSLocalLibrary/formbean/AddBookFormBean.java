@@ -21,7 +21,6 @@ public class AddBookFormBean {
     @NotBlank(message = "Please enter a title.")
     private String title;
 
-//    @NotBlank(message = "Please enter a price.")
     @NotNull(message = "Please enter a positive number.")
     @Positive(message = "Please enter a positive number.")
     private Double price;

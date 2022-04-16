@@ -28,8 +28,13 @@ public class Book {
     @Column(name = "category", nullable = false)
     private String category;
 
+    public enum BookCondition {
+        DAMAGED,
+        GOOD;
+    }
     @Column(name = "bcondition", nullable = false, length = 10)
-    private String condition;
+    @Enumerated(EnumType.STRING)
+    private BookCondition condition;
 
     public enum BookStatus {
         AVAILABLE,

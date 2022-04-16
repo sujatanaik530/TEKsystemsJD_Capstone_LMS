@@ -92,7 +92,7 @@
                 <div class="row m-3 p-2">
                     <label for="imageURL" class="form-label">Thumbnail URL:</label>
                     <input type="text" class="form-control border border-2 border-dark" id="imageURL"
-                           placeholder="Enter thumbnail URL" name="imageURL" value="${form.price}" />
+                           placeholder="Enter thumbnail URL" name="imageURL" value="${form.imageURL}" />
                     <p class="hiddenMsg form-text"></p>
                     <c:forEach items="${bindingResult.getFieldErrors('imageURL')}" var="error">
                         <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>

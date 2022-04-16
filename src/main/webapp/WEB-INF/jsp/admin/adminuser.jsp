@@ -62,6 +62,11 @@
     </ul>
     <br/>
     <br/>
+    <div style="margin:auto;width:50%;">
+        <button type="button" class="btn btn-dark">Add a new user</button>
+        <button type="button" class="btn btn-dark">Edit user information</button>
+        <button type="button" class="btn btn-dark">Delete a user</button>
+    </div>
     <div class="form-group">
     </div>
 </div>

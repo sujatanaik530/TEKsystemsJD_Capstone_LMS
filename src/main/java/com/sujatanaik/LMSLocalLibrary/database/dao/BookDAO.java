@@ -28,5 +28,4 @@ public interface BookDAO extends JpaRepository<Book, Long> {
 
     @Query(value = "SELECT * FROM books WHERE author LIKE %:author% AND bstatus = 'AVAILABLE'", nativeQuery = true)
     List<Book> findBookByAuthorAndAvailable(@Param("author") String author);
-
 }

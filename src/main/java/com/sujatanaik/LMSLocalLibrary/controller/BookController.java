@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -48,7 +50,7 @@ public class BookController {
     /**
      * This method is used for "create" or "edit", based on the "id" value.
      */
-    @RequestMapping (value = "book/addbooksubmit", method = RequestMethod.POST)
+    @RequestMapping (value = "book/addbooksubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView addbookSubmit(@Valid AddBookFormBean form, BindingResult bindingResult) throws Exception {
 
         ModelAndView response = new ModelAndView();
@@ -67,7 +69,7 @@ public class BookController {
             response.addObject("bindingResult", bindingResult);
             response.addObject("errorMessages", errorMessages);
 
-            response.setViewName("book/addbook");
+            response.setViewName("admin/adminbook");
             return response;
         }
 
@@ -83,10 +85,10 @@ public class BookController {
         book.setAuthor(form.getAuthor());
         book.setPrice(form.getPrice());
         book.setCategory(form.getCategory());
+        book.setCondition(Book.BookCondition.valueOf(form.getCondition()));
         //book.setCondition(form.getCondition());
-        book.setCondition("Good");
+        book.setStatus(Book.BookStatus.valueOf(form.getStatus()));
         //book.setStatus(form.getStatus());
-        book.setStatus(Book.BookStatus.AVAILABLE);
         book.setImg(form.getImageURL());
 
         bookDao.save(book);
@@ -97,7 +99,30 @@ public class BookController {
 
         // redirect to an add book page again to add more books?
 
-        response.setViewName("redirect:/book/addbook");
+        response.setViewName("admin/adminbook");
+
+        return response;
+    }
+
+    @RequestMapping (value = "/book/editbook", method = RequestMethod.GET)
+    public ModelAndView editBook(@RequestParam("title") String title) throws Exception {
+
+        ModelAndView response = new ModelAndView();
+
+        Book theBook = bookDao.findDistinctByTitle(title);
+
+        AddBookFormBean form = new AddBookFormBean();
+
+        form.setId(theBook.getId());
+        form.setTitle(theBook.getTitle());
+        form.setPrice(theBook.getPrice());
+        form.setAuthor(theBook.getAuthor());
+        form.setCategory(theBook.getCategory());
+        form.setImageURL(theBook.getImg());
+
+        response.addObject("form", form);
+
+        response.setViewName("admin/adminbook");
 
         return response;
     }

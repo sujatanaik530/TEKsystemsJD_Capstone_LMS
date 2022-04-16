@@ -17,18 +17,6 @@
             width: 100px;
             border: 1px solid;
         }
-
-        .ratio1 {
-            width: 10%;
-        }
-
-        .ratio5 {
-            width: 50%;
-        }
-
-        .ratio4 {
-            width: 40%;
-        }
     </style>
 </head>
 
@@ -62,7 +50,165 @@
     </ul>
     <br/>
     <br/>
+    <div style="margin:auto;width:50%;">
+        <button type="button" class="btn btn-dark" id="addBook">Add a new book</button>
+    </div>
+    <br/><br/>
     <div class="form-group">
+        <form method="get" id="searchform" style="border:none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control border border-2 border-dark" id="search"
+                           placeholder="Enter search term" name="search" value="${search}" />
+                </div>
+                <div class="col-md-3">
+                    <select id="searchBy" class="form-select border border-2 border-dark" name="searchBy">
+                        <option value="Title">Title</option>
+                        <option value="Author">Author</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" id="searchButton" class="btn btn-dark">Search</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        <c:if test="${not empty message}">
+            <div id="libmsg">
+                <br/>
+                    ${message}
+                <br/>
+                <br/>
+            </div>
+            <br />
+        </c:if>
+        <table class="table" style="margin: auto; background: white;" id="myTable">
+            <thead class="table-dark">
+            <c:if test="${not empty books}">
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Author</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="books">
+            <c:forEach items="${books}" var="book">
+                <tr>
+                    <td><img src="${book.img}"/></td>
+                    <td class="titlecol">${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>
+                        <input type="button" class="editBook" value="Edit">
+                    </td>
+                    <td>
+                        <input type="button" class="deleteBook" value="Delete">
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+            <tfoot class="table-dark">
+            <tr>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td></td>
+            </tr>
+            </tfoot>
+            </c:if>
+        </table>
+        <c:if test="${not empty form}">
+            <div id="patronform">
+                <c:if test="${empty form.id}">
+                    <h2 class="text-center m-5">Add New Book</h2>
+                </c:if>
+
+                <c:if test="${not empty form.id}">
+                    <h2 class="text-center m-5">Edit Book Information</h2>
+                </c:if>
+
+                <div class="form-group">
+                    <form action="addbooksubmit" method="post">
+                        <input type="hidden" name="id" value="${form.id}">
+                        <div class="row m-3 p-2">
+                            <label for="title" class="form-label">Book Title:</label>
+                            <input type="text" class="form-control border border-2 border-dark" id="title"
+                                   placeholder="Enter book title" name="title" value="${form.title}" />
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('title')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="author" class="form-label">Book Author:</label>
+                            <input type="text" class="form-control border border-2 border-dark" id="author"
+                                   placeholder="Enter author name" name="author" value="${form.author}" />
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('author')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="category" class="form-label">Book Category:</label>
+                            <input type="text" class="form-control border border-2 border-dark" id="category"
+                                   placeholder="Enter book category" name="category" value="${form.category}" />
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('category')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="price" class="form-label">Book Price:</label>
+                            <input type="number" step="0.01" class="form-control border border-2 border-dark" id="price"
+                                   placeholder="Enter book price" name="price" value="${form.price}" />
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('price')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="condition" class="form-label">Book Condition:</label>
+                            <select id="condition" class="form-select border border-2 border-dark" name="condition" value="${form.condition}">
+                                <option value="GOOD">Good</option>
+                                <option value="DAMAGED">Damaged</option>
+                            </select>
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('condition')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="status" class="form-label">Book Status:</label>
+                            <select id="status" class="form-select border border-2 border-dark" name="status" value="${form.status}">
+                                <option value="AVAILABLE">Available</option>
+                                <option value="CHECKEDOUT">Checked Out</option>
+                                <option value="LOST">Lost</option>
+                            </select>
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('status')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="row m-3 p-2">
+                            <label for="imageURL" class="form-label">Thumbnail URL:</label>
+                            <input type="text" class="form-control border border-2 border-dark" id="imageURL"
+                                   placeholder="Enter thumbnail URL" name="imageURL" value="${form.imageURL}" />
+                            <p class="hiddenMsg form-text"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('imageURL')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
+                        <div class="m-4 p-2">
+                            <button type="submit" class="btn btn-dark" id="addbook">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </c:if>
+        <br/>
     </div>
 </div>
 <script src="../js/adminbook.js"></script>

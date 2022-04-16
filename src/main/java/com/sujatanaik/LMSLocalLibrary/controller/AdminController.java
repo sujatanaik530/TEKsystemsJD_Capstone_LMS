@@ -21,11 +21,92 @@ import java.util.List;
 @Controller
 public class AdminController {
 
+    @Autowired
+    BookDAO bookDao;
+
     @RequestMapping(value="/admin/adminsearch", method= RequestMethod.GET)
     public ModelAndView adminsearch() throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("In AdminController - adminsearch()");
         response.setViewName("admin/adminsearch");
+        return response;
+    }
+
+    @GetMapping(value="/admin/searchtitle")
+    public ModelAndView searchByTitle(@RequestParam(required=false, name="searchT") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In AdminController - searchByTitle()");
+
+        List<Book> books;
+
+        if (!StringUtils.isBlank(search)) {
+            books = bookDao.findByTitleIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
+            response.addObject("books", books);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminbook");
+
+        return response;
+    }
+
+    @GetMapping(value="/admin/searchauthor")
+    public ModelAndView searchByAuthor(@RequestParam(required=false, name="searchA") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In AdminController - searchByAuthor()");
+
+        List<Book> books = new ArrayList<>();
+
+        if (!StringUtils.isBlank(search)) {
+            books = bookDao.findByAuthorIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
+            response.addObject("books", books);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminbook");
+
+        return response;
+    }
+
+    @GetMapping(value="/admin/searchcategory")
+    public ModelAndView searchByCategory(@RequestParam(required=false, name="searchC") String search) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        log.info("In AdminController - searchByCategory()");
+
+        List<Book> books = new ArrayList<>();
+
+        if (!StringUtils.isBlank(search)) {
+            books = bookDao.findByCategoryIgnoreCaseContaining(search);
+            if (books.isEmpty()) {
+                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+            }
+            response.addObject("books", books);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", search);
+
+        response.setViewName("admin/adminbook");
+
         return response;
     }
 
