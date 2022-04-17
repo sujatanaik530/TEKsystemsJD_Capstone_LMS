@@ -3,6 +3,7 @@ package com.sujatanaik.LMSLocalLibrary.controller;
 import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
 import com.sujatanaik.LMSLocalLibrary.formbean.AddBookFormBean;
+import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
 import com.sujatanaik.LMSLocalLibrary.formbean.SearchFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -126,4 +127,3 @@ public class AdminController {
         return response;
     }
 }
-// TODO add an errorcontroller

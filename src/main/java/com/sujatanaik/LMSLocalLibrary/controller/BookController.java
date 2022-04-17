@@ -39,7 +39,7 @@ public class BookController {
 
         log.info("In BookController - addBook()");
 
-        response.setViewName("book/addbook");
+        response.setViewName("admin/adminbook");
 
         AddBookFormBean form = new AddBookFormBean();
         response.addObject("form", form);
@@ -86,9 +86,7 @@ public class BookController {
         book.setPrice(form.getPrice());
         book.setCategory(form.getCategory());
         book.setCondition(Book.BookCondition.valueOf(form.getCondition()));
-        //book.setCondition(form.getCondition());
         book.setStatus(Book.BookStatus.valueOf(form.getStatus()));
-        //book.setStatus(form.getStatus());
         book.setImg(form.getImageURL());
 
         bookDao.save(book);

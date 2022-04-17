@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <div class="m-4 p-2">
-                    <button type="submit" class="btn btn-dark" id="create">Create account</button>
+                    <button type="submit" class="btn btn-dark" id="create">Update Information</button>
                 </div>
             </form>
         </div>

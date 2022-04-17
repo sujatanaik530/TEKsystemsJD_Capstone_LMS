@@ -55,7 +55,7 @@
     </div>
     <br/><br/>
     <div class="form-group">
-        <form method="get" id="searchform" style="border:none;">
+        <form method="get" id="searchform" style="width:50%">
             <div class="row">
                 <div class="col-md-6">
                     <input type="text" class="form-control border border-2 border-dark" id="search"
@@ -120,6 +120,7 @@
             </tfoot>
             </c:if>
         </table>
+        <br/><br/>
         <c:if test="${not empty form}">
             <div id="patronform">
                 <c:if test="${empty form.id}">
@@ -202,7 +203,7 @@
                             </c:forEach>
                         </div>
                         <div class="m-4 p-2">
-                            <button type="submit" class="btn btn-dark" id="addbook">Submit</button>
+                            <button type="submit" class="btn btn-dark" id="addbookSubmit">Submit</button>
                         </div>
                     </form>
                 </div>

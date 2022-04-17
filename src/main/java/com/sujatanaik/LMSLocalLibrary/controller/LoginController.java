@@ -7,6 +7,8 @@ import com.sujatanaik.LMSLocalLibrary.database.entity.UserRole;
 import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -37,13 +39,13 @@ public class LoginController {
      * NOT USED ANYMORE
      */
 
-    @RequestMapping(value="/login/userlogin", method= RequestMethod.GET)
-    public ModelAndView loginOriginal() throws Exception {
-        ModelAndView response = new ModelAndView();
-        log.info("In UserController - login()");
-        response.setViewName("login/userlogin");
-        return response;
-    }
+//    @RequestMapping(value="/login/userlogin", method= RequestMethod.GET)
+//    public ModelAndView loginOriginal() throws Exception {
+//        ModelAndView response = new ModelAndView();
+//        log.info("In UserController - loginOriginal()");
+//        response.setViewName("login/userlogin");
+//        return response;
+//    }
 
     @RequestMapping(value="/login/login", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
@@ -137,10 +139,21 @@ public class LoginController {
 
         log.info(form.toString());
 
-        // redirect to login page
+        // if a new user is registering, redirect to /login/login
+        // if an admin is registering a new user, redirect to /admin/adminuser
 
-        response.setViewName("redirect:/login/userlogin");
+        // using authentication information, to check if any one is logged in
+        // TODO Fix this: any logged in user can create a new user using the URL http://localhost:8080/user/adduser
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
-        return response;
+        if (currentPrincipalName != null) {
+            response.setViewName("redirect:/admin/adminuser");
+            return response;
+        }
+        else {
+            response.setViewName("redirect:/login/login");
+            return response;
+        }
     }
 }

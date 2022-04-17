@@ -1,11 +1,9 @@
 package com.sujatanaik.LMSLocalLibrary.controller;
 
-import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
-import com.sujatanaik.LMSLocalLibrary.database.dao.BorrowedBooksDAO;
-import com.sujatanaik.LMSLocalLibrary.database.dao.UserBookDAO;
-import com.sujatanaik.LMSLocalLibrary.database.dao.UserDAO;
+import com.sujatanaik.LMSLocalLibrary.database.dao.*;
 import com.sujatanaik.LMSLocalLibrary.database.entity.*;
 import com.sujatanaik.LMSLocalLibrary.formbean.PatronEditFormBean;
+import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -44,6 +42,9 @@ public class UserController {
 
     @Autowired
     private UserBookDAO userBookDao;
+
+    @Autowired
+    private UserRoleDAO userRoleDao;
 
     /**
      * This method is for editing a user's information. There is a path parameter being used to pass the userid
@@ -348,4 +349,17 @@ public class UserController {
         response.setViewName("user/usercheckouts");
         return response;
     }
+
+    @RequestMapping(value="/user/adduser", method= RequestMethod.GET)
+    public ModelAndView addUser() throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In UserController - addUser()");
+
+        PatronRegisterFormBean userform = new PatronRegisterFormBean();
+        response.addObject("userform", userform);
+
+        response.setViewName("admin/adminuser");
+        return response;
+    }
+
 }
