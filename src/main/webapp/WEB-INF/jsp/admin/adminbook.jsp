@@ -173,8 +173,12 @@
                         <div class="row m-3 p-2">
                             <label for="condition" class="form-label">Book Condition:</label>
                             <select id="condition" class="form-select border border-2 border-dark" name="condition" value="${form.condition}">
-                                <option value="GOOD">Good</option>
-                                <option value="DAMAGED">Damaged</option>
+                                <option value="GOOD" <c:if test="${form.condition == \"GOOD\"}">
+                                    selected
+                                </c:if>>Good</option>
+                                <option value="DAMAGED" <c:if test="${form.condition == \"DAMAGED\"}">
+                                    selected
+                                </c:if>>Damaged</option>
                             </select>
                             <p class="hiddenMsg form-text"></p>
                             <c:forEach items="${bindingResult.getFieldErrors('condition')}" var="error">
@@ -184,9 +188,15 @@
                         <div class="row m-3 p-2">
                             <label for="status" class="form-label">Book Status:</label>
                             <select id="status" class="form-select border border-2 border-dark" name="status" value="${form.status}">
-                                <option value="AVAILABLE">Available</option>
-                                <option value="CHECKEDOUT">Checked Out</option>
-                                <option value="LOST">Lost</option>
+                                <option value="AVAILABLE" <c:if test="${form.status == \"AVAILABLE\"}">
+                                    selected
+                                </c:if>>Available</option>
+                                <option value="CHECKEDOUT" <c:if test="${form.status == \"CHECKEDOUT\"}">
+                                    selected
+                                </c:if>>Checked Out</option>
+                                <option value="LOST" <c:if test="${form.status == \"LOST\"}">
+                                    selected
+                                </c:if>>Lost</option>
                             </select>
                             <p class="hiddenMsg form-text"></p>
                             <c:forEach items="${bindingResult.getFieldErrors('status')}" var="error">

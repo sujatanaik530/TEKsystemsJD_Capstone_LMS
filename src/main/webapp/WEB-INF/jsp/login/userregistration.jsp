@@ -85,11 +85,11 @@
                         <label for="inputState" class="form-label">State</label>
                         <select id="inputState" class="form-select border border-2 border-dark" name="state" value="${form.state}">
                             <option></option>
-                            <option value="MN">Minnesota</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="IA">Iowa</option>
+                            <option value="Minnesota">Minnesota</option>
+                            <option value="Wisconsin">Wisconsin</option>
+                            <option value="North Dakota">North Dakota</option>
+                            <option value="South Dakota">South Dakota</option>
+                            <option value="Iowa">Iowa</option>
                         </select>
                         <p class="hiddenMsg form-text"></p>
                         <c:forEach items="${bindingResult.getFieldErrors('state')}" var="error">

@@ -146,14 +146,25 @@ public class LoginController {
         // TODO Fix this: any logged in user can create a new user using the URL http://localhost:8080/user/adduser
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
+        User loggedInUser = userDao.findByEmail(currentPrincipalName);
 
-        if (currentPrincipalName != null) {
-            response.setViewName("redirect:/admin/adminuser");
+        if (loggedInUser == null) {
+            // new user just registered
+            response.setViewName("redirect:/login/login");
             return response;
         }
         else {
-            response.setViewName("redirect:/login/login");
-            return response;
+            boolean isAdmin = userRoleDao.existsUserRoleByUserIdAndUserRoleEquals(loggedInUser.getId(), "ADMIN");
+            if (isAdmin) {
+                // admin registered a new user
+                response.setViewName("redirect:/admin/adminuser");
+                return response;
+            }
+            else {
+                // ? is this path taken at all?
+                response.setViewName("redirect:/login/login");
+                return response;
+            }
         }
     }
 }

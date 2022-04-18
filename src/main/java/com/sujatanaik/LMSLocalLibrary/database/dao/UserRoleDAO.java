@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface UserRoleDAO extends JpaRepository<UserRole, Long> {
     List<UserRole> findByUserId(@Param("userId") Integer userId);
+    boolean existsUserRoleByUserIdAndUserRoleEquals(@Param("user_id") Integer user_id, @Param("user_role") String userRole);
 }

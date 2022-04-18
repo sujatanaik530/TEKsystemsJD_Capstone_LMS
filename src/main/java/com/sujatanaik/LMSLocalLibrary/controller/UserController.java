@@ -2,9 +2,11 @@ package com.sujatanaik.LMSLocalLibrary.controller;
 
 import com.sujatanaik.LMSLocalLibrary.database.dao.*;
 import com.sujatanaik.LMSLocalLibrary.database.entity.*;
+import com.sujatanaik.LMSLocalLibrary.formbean.AdminUserControlFormBean;
 import com.sujatanaik.LMSLocalLibrary.formbean.PatronEditFormBean;
 import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,7 +53,7 @@ public class UserController {
      * from the user to be edited.
      */
     @RequestMapping (value = "/user/edit", method = RequestMethod.GET) /* This is the URL part after localhost:8080. */
-    public ModelAndView editUser() throws Exception {
+    public ModelAndView editUser(@RequestParam(required=false, name="email") String email) throws Exception {
         ModelAndView response = new ModelAndView();
 
         log.info("In UserController - editUser()");
@@ -59,29 +61,51 @@ public class UserController {
         // using authentication information, get user_id from users table
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User loggedInUser = userDao.findByEmail(currentPrincipalName);
 
         PatronEditFormBean form = new PatronEditFormBean();
 
-        form.setId(loggedInUser.getId());
-        form.setEmail(loggedInUser.getEmail());
-        form.setFname(loggedInUser.getFirstName());
-        form.setLname(loggedInUser.getLastName());
+        User user;
+
+        // if a user is editing his/her own information
+        if (email == null) {
+            user = userDao.findByEmail(currentPrincipalName);
+            response.addObject("form", form);
+        }
+        // if an admin is editing a user's information
+        else {
+            user = userDao.findByEmail(email);
+            response.addObject("form", form);
+        }
+
+        form.setId(user.getId());
+        form.setEmail(user.getEmail());
+        form.setFname(user.getFirstName());
+        form.setLname(user.getLastName());
+
+        // TODO decrypt the password from the db and then show it on the form, masked?
         form.setPassword("");
         form.setCpassword("");
-        form.setAline1(loggedInUser.getAddressLine1());
-        form.setAline2(loggedInUser.getAddressLine2());
-        form.setCity((loggedInUser.getCity()));
-        form.setState(loggedInUser.getState());
-        form.setZip(loggedInUser.getZip());
-        form.setPhone(loggedInUser.getPhone());
 
-        response.addObject("form", form);
+        form.setAline1(user.getAddressLine1());
+        form.setAline2(user.getAddressLine2());
+        form.setCity((user.getCity()));
+        // TODO The state field is a dropdown. How do I get the entry from the database to show as the selected
+        //  value in the dropdown?
+        form.setState(user.getState());
+        form.setZip(user.getZip());
+        form.setPhone(user.getPhone());
 
-        // database -> form bean -> form
-
-        response.setViewName("user/useredit"); /* This is the JSP we need. */
-
+        // if a user is editing his/her own information
+        if (email == null) {
+            response.addObject("form", form);
+            response.setViewName("user/useredit"); /* This is the JSP we need. */
+        }
+        // if an admin is editing a user's information
+        else {
+            form.setUstatus(user.getStatus().toString());
+            response.addObject("userform", form);
+            response.setViewName("admin/adminuser");
+        }
         return response;
     }
 
@@ -101,6 +125,8 @@ public class UserController {
         String currentPrincipalName = authentication.getName();
         User loggedInUser = userDao.findByEmail(currentPrincipalName);
 
+        boolean isAdmin = userRoleDao.existsUserRoleByUserIdAndUserRoleEquals(loggedInUser.getId(), "ADMIN");
+
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
 
@@ -109,48 +135,79 @@ public class UserController {
                 log.info(((FieldError) error).getField() + " " + error.getDefaultMessage());
             }
 
-            response.addObject("form", form);
+            if (isAdmin) {
+                response.addObject("userform", form);
+                response.setViewName("admin/adminuser");
+            }
+            else {
+                response.addObject("form", form);
+                response.setViewName("user/useredit");
+            }
+
             response.addObject("bindingResult", bindingResult);
             response.addObject("errorMessages", errorMessages);
 
-            response.setViewName("user/useredit");
             return response;
         }
 
-        // try to load the user from db using incoming id
-        User user = userDao.findById(loggedInUser.getId());
+        if (!isAdmin) {
+            // try to load the user from db using incoming id
+            User user = userDao.findById(loggedInUser.getId());
 
-        // now check if the user is null, it means user isn't in the db. We then create a user.
-//        if (user == null) {
-//            user = new User();
-//        }
+            user.setAddressLine1(form.getAline1());
+            user.setAddressLine2(form.getAline2());
+            user.setCity(form.getCity());
+            user.setState(form.getState());
+            user.setZip(form.getZip());
+            user.setPhone(form.getPhone());
 
-        //user.setEmail(form.getEmail());
-        //user.setFirstName(form.getFname());
-        //user.setLastName(form.getLname());
-        user.setAddressLine1(form.getAline1());
-        user.setAddressLine2(form.getAline2());
-        user.setCity(form.getCity());
-        user.setState(form.getState());
-        user.setZip(form.getZip());
-        user.setPhone(form.getPhone());
+            // encrypt the password from the form and then save it
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(form.getPassword()));
 
-        // encrypt the password from the form and then save it
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(form.getPassword()));
+            user.setStatus(User.UserStatus.ACTIVE);
 
-        user.setStatus(User.UserStatus.ACTIVE);
+            // add a row for this user to the users table
+            userDao.save(user);
 
-        // add a row for this user to the users table
-        userDao.save(user);
+            // form(HTML) -> form bean(form object above) -> database(user object above)
 
-        // form(HTML) -> form bean(form object above) -> database(user object above)
+            log.info(form.toString());
 
-        log.info(form.toString());
+            response.setViewName("redirect:/user/usersearch");
+        }
+        // if admin is editing a user's information
+        else {
+            User user = userDao.findByEmail(form.getEmail());
 
-        // TODO redirect to where?
+            // user does not exist, create a new user
+            if (user == null) {
+                user = new User();
+            }
+            user.setEmail(form.getEmail());
+            user.setFirstName(form.getFname());
+            user.setLastName((form.getLname()));
+            user.setAddressLine1(form.getAline1());
+            user.setAddressLine2(form.getAline2());
+            user.setCity(form.getCity());
+            user.setState(form.getState());
+            user.setZip(form.getZip());
+            user.setPhone(form.getPhone());
 
-        response.setViewName("redirect:/user/usersearch");
+            // encrypt the password from the form and then save it
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(form.getPassword()));
+
+            user.setStatus(User.UserStatus.valueOf(form.getUstatus()));
+
+            // add a row for this user to the users table
+            userDao.save(user);
+
+            log.info(form.toString());
+
+            response.setViewName("redirect:/admin/adminuser");
+        }
+
 
         return response;
     }
@@ -207,7 +264,6 @@ public class UserController {
         BorrowedBook borrowedBook = borrowedBooksDao.findByBookIdAndBstatus(theBook.getId(), BorrowedBook.BookStatus.CHECKEDOUT);
         if (borrowedBook != null) {
             // book already checked out
-            // TODO formatting for message to be done in JSP
             if (borrowedBook.getUser().getId() == loggedInUser.getId()) {
                 // checked out by logged in user
                 response.addObject("message", "You have already checked out the book.");
@@ -220,7 +276,6 @@ public class UserController {
                 return response;
             }
             // If checked out by different user, show appropriate message and user's checkouts.
-            // TODO formatting for message to be done in JSP
             else {
                 // checked out by different user
                 response.addObject("message", "This book has been checked out by another user.");
@@ -362,4 +417,83 @@ public class UserController {
         return response;
     }
 
+    @RequestMapping(value="/user/deleteuser", method= RequestMethod.GET)
+    public ModelAndView deleteUser() throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In UserController - deleteUser()");
+
+        // TODO Do we need to implement delete user by admin?
+
+        response.setViewName("admin/adminuser");
+        return response;
+    }
+
+    @RequestMapping(value="/user/searchuserbyfirstname", method= RequestMethod.GET)
+    public ModelAndView searchUserByFirstName(@RequestParam(name = "searchFN", required = false) String fname) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In UserController - searchUserByFirstName()");
+
+        List<User> users;
+        if (!StringUtils.isBlank(fname)) {
+            users = userDao.findByFirstNameIgnoreCaseContaining(fname);
+            if (users.isEmpty()) {
+                response.addObject("message", "Your search for \"" + fname + "\" returned no results");
+            }
+            response.addObject("libusers", users);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", fname);
+
+        response.setViewName("admin/adminuser");
+        return response;
+    }
+
+    @RequestMapping(value="/user/searchuserbylastname", method= RequestMethod.GET)
+    public ModelAndView searchUserByLastName(@RequestParam(name = "searchLN", required = false) String lname) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In UserController - searchUserByLastName()");
+
+        List<User> users;
+        if (!StringUtils.isBlank(lname)) {
+            users = userDao.findByLastNameIgnoreCaseContaining(lname);
+            if (users.isEmpty()) {
+                response.addObject("message", "Your search for \"" + lname + "\" returned no results");
+            }
+            response.addObject("libusers", users);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", lname);
+
+        response.setViewName("admin/adminuser");
+        return response;
+    }
+
+    @RequestMapping(value="/user/searchuserbyemail", method= RequestMethod.GET)
+    public ModelAndView searchUserByEmail(@RequestParam(name = "searchEmail", required = false) String email) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In UserController - searchUserByEmail()");
+
+        User user;
+        if (!StringUtils.isBlank(email)) {
+            user = userDao.findByEmail(email);
+            if (user == null) {
+                response.addObject("message", "Your search for \"" + email + "\" returned no results");
+            }
+            response.addObject("libuser", user);
+        }
+        else {
+            log.info("Search term cannot be empty!");
+        }
+
+        response.addObject("search", email);
+
+        response.setViewName("admin/adminuser");
+        return response;
+    }
 }

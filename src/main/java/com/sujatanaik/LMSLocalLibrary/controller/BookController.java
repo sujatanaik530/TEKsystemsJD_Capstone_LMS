@@ -114,6 +114,8 @@ public class BookController {
         form.setId(theBook.getId());
         form.setTitle(theBook.getTitle());
         form.setPrice(theBook.getPrice());
+        form.setCondition(theBook.getCondition().toString());
+        form.setStatus(theBook.getStatus().toString());
         form.setAuthor(theBook.getAuthor());
         form.setCategory(theBook.getCategory());
         form.setImageURL(theBook.getImg());

@@ -11,3 +11,5 @@ class LmsLocalLibraryApplicationTests {
 	}
 
 }
+// TODO JUnit example
+// https://github.com/gneliana/RecipeCaseStudy/blob/main/src/test/java/com/eliana/betancur/recipe/MeasurementsDAOTest.java

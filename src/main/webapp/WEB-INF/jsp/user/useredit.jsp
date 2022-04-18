@@ -97,12 +97,21 @@
                     <div class="col-md-4">
                         <label for="inputState" class="form-label">State</label>
                         <select id="inputState" class="form-select border border-2 border-dark" name="state" value="${form.state}">
-                            <option></option>
-                            <option value="Minnesota">Minnesota</option>
-                            <option value="Wisconsin">Wisconsin</option>
-                            <option value="North Dakota">North Dakota</option>
-                            <option value="South Dakota">South Dakota</option>
-                            <option value="Iowa">Iowa</option>
+                            <option value="Minnesota" <c:if test="${form.state == \"Minnesota\"}">
+                                selected
+                            </c:if>>Minnesota</option>
+                            <option value="Wisconsin" <c:if test="${form.state == \"Wisconsin\"}">
+                                selected
+                            </c:if>>Wisconsin</option>
+                            <option value="North Dakota" <c:if test="${form.state == \"North Dakota\"}">
+                                selected
+                            </c:if>>North Dakota</option>
+                            <option value="South Dakota" <c:if test="${form.state == \"South Dakota\"}">
+                                selected
+                            </c:if>>South Dakota</option>
+                            <option value="Iowa" <c:if test="${form.state == \"Iowa\"}">
+                                selected
+                            </c:if>>Iowa</option>
                         </select>
                         <p class="hiddenMsg form-text"></p>
                         <c:forEach items="${bindingResult.getFieldErrors('state')}" var="error">

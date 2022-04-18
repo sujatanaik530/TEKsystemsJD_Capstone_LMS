@@ -50,10 +50,10 @@
     </ul>
     <br/>
     <br/>
-    <div style="margin:auto;width:50%;">
-        <button type="button" class="btn btn-dark" id="addUser">Add a new user</button>
-    </div>
-    <br/><br/>
+<%--    <div style="margin:auto;width:50%;">--%>
+<%--        <button type="button" class="btn btn-dark" id="addUser">Add a new user</button>--%>
+<%--    </div>--%>
+<%--    <br/><br/>--%>
     <div class="form-group">
         <form method="get" id="searchform" style="width:50%">
             <div class="row">
@@ -85,6 +85,38 @@
         </c:if>
         <table class="table" style="margin: auto; background: white;" id="myTable">
             <thead class="table-dark">
+            <c:if test="${not empty libuser}">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="libusers">
+            <tr>
+                <td>${libuser.firstName}</td>
+                <td>${libuser.lastName}</td>
+                <td class="emailcol">${libuser.email}</td>
+                <td>
+                    <input type="button" class="editUser" value="Edit">
+                </td>
+                <td>
+                    <input type="button" class="deleteUser" value="Delete">
+                </td>
+            </tr>
+            </tbody>
+            <tfoot class="table-dark">
+            <tr>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td class="foot"></td>
+                <td></td>
+            </tr>
+            </tfoot>
+            </c:if>
             <c:if test="${not empty libusers}">
             <tr>
                 <th>First Name</th>
@@ -99,7 +131,7 @@
                 <tr>
                     <td>${libuser.firstName}</td>
                     <td>${libuser.lastName}</td>
-                    <td>${libuser.email}</td>
+                    <td class="emailcol">${libuser.email}</td>
                     <td>
                         <input type="button" class="editUser" value="Edit">
                     </td>
@@ -132,7 +164,7 @@
                 </c:if>
 
                 <div class="form-group">
-                    <form action="../login/userregistrationsubmit" method="post">
+                    <form action="../user/usereditsubmit" method="post">
                         <div class="row m-2 p-2">
                             <div class="col-md-6">
                                 <label for="fname" class="form-label">First Name:</label>
@@ -149,6 +181,19 @@
                                        placeholder="Enter last name" name="lname" value="${userform.lname}" />
                                 <p class="hiddenMsg form-text"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('lname')}" var="error">
+                                    <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <div class="row m-2 p-2">
+                            <div>
+                                <label for="ustatus" class="form-label">State</label>
+                                <select id="ustatus" class="form-select border border-2 border-dark" name="ustatus" value="${userform.ustatus}">
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>
+                                <p class="hiddenMsg form-text"></p>
+                                <c:forEach items="${bindingResult.getFieldErrors('fname')}" var="error">
                                     <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
                                 </c:forEach>
                             </div>
@@ -185,12 +230,21 @@
                             <div class="col-md-4">
                                 <label for="inputState" class="form-label">State</label>
                                 <select id="inputState" class="form-select border border-2 border-dark" name="state" value="${userform.state}">
-                                    <option></option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="WI">Wisconsin</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="IA">Iowa</option>
+                                    <option value="Minnesota" <c:if test="${userform.state == \"Minnesota\"}">
+                                        selected
+                                    </c:if>>Minnesota</option>
+                                    <option value="Wisconsin" <c:if test="${userform.state == \"Wisconsin\"}">
+                                        selected
+                                    </c:if>>Wisconsin</option>
+                                    <option value="North Dakota" <c:if test="${userform.state == \"North Dakota\"}">
+                                        selected
+                                    </c:if>>North Dakota</option>
+                                    <option value="South Dakota" <c:if test="${userform.state == \"South Dakota\"}">
+                                        selected
+                                    </c:if>>South Dakota</option>
+                                    <option value="Iowa" <c:if test="${userform.state == \"Iowa\"}">
+                                        selected
+                                    </c:if>>Iowa</option>
                                 </select>
                                 <p class="hiddenMsg form-text"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('state')}" var="error">
@@ -211,7 +265,7 @@
                             <div>
                                 <label for="email" class="form-label">Email:</label>
                                 <input type="email" class="form-control border border-2 border-dark" id="email"
-                                       placeholder="Enter email" name="email" value="${userform.email}" />
+                                       placeholder="Enter email" name="email" value="${userform.email}"/>
                                 <p class="hiddenMsg form-text"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('email')}" var="error">
                                     <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
@@ -233,7 +287,7 @@
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Password:</label>
                                 <input type="password" class="form-control border border-2 border-dark" id="password"
-                                       placeholder="Enter password" name="password" value="${userform.password}" />
+                                       placeholder="Enter password" name="password" value="${userform.password}"/>
                                 <p class="hiddenMsg form-text"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('password')}" var="error">
                                     <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
@@ -242,12 +296,12 @@
                             <div class="col-md-6">
                                 <label for="cpassword" class="form-label">Confirm Password:</label>
                                 <input type="password" class="form-control border border-2 border-dark" id="cpassword"
-                                       placeholder="Confirm password" name="cpassword" value="${userform.cpassword}" />
+                                       placeholder="Confirm password" name="cpassword" value="${userform.cpassword}"/>
                                 <p class="hiddenMsg form-text"></p>
                             </div>
                         </div>
                         <div class="m-4 p-2">
-                            <button type="submit" class="btn btn-dark" id="create">Create account</button>
+                            <button type="submit" class="btn btn-dark" id="create">Update user information</button>
                         </div>
                     </form>
                 </div>
