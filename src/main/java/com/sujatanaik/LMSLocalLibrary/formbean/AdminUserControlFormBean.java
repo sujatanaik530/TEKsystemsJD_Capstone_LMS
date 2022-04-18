@@ -46,4 +46,6 @@ public class AdminUserControlFormBean {
     @NotBlank (message = "Please enter a phone number.")
     @Pattern(regexp = "[0-9]{10}", message = "Please enter a valid phone number using 10 digits.")
     private String phone;
+
+    private String ustatus;
 }

@@ -164,7 +164,7 @@
                 </c:if>
 
                 <div class="form-group">
-                    <form action="../user/usereditsubmit" method="post">
+                    <form action="../admin/usereditsubmit" method="post">
                         <div class="row m-2 p-2">
                             <div class="col-md-6">
                                 <label for="fname" class="form-label">First Name:</label>
@@ -189,8 +189,12 @@
                             <div>
                                 <label for="ustatus" class="form-label">State</label>
                                 <select id="ustatus" class="form-select border border-2 border-dark" name="ustatus" value="${userform.ustatus}">
-                                    <option value="ACTIVE">ACTIVE</option>
-                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="ACTIVE" <c:if test="${userform.ustatus == \"ACTIVE\"}">
+                                        selected
+                                    </c:if>>ACTIVE</option>
+                                    <option value="INACTIVE" <c:if test="${userform.ustatus == \"INACTIVE\"}">
+                                        selected
+                                    </c:if>>INACTIVE</option>
                                 </select>
                                 <p class="hiddenMsg form-text"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('fname')}" var="error">
@@ -283,6 +287,7 @@
                                 </c:forEach>
                             </div>
                         </div>
+                        <sec:authorize access="!hasAuthority('ADMIN')">
                         <div class="row m-2 p-2">
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Password:</label>
@@ -300,6 +305,7 @@
                                 <p class="hiddenMsg form-text"></p>
                             </div>
                         </div>
+                        </sec:authorize>
                         <div class="m-4 p-2">
                             <button type="submit" class="btn btn-dark" id="create">Update user information</button>
                         </div>

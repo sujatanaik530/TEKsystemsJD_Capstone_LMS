@@ -62,50 +62,58 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        PatronEditFormBean form = new PatronEditFormBean();
-
         User user;
 
         // if a user is editing his/her own information
         if (email == null) {
+            PatronEditFormBean form = new PatronEditFormBean();
+
             user = userDao.findByEmail(currentPrincipalName);
+
             response.addObject("form", form);
-        }
-        // if an admin is editing a user's information
-        else {
-            user = userDao.findByEmail(email);
-            response.addObject("form", form);
-        }
 
-        form.setId(user.getId());
-        form.setEmail(user.getEmail());
-        form.setFname(user.getFirstName());
-        form.setLname(user.getLastName());
+            form.setId(user.getId());
+            form.setEmail(user.getEmail());
+            form.setFname(user.getFirstName());
+            form.setLname(user.getLastName());
 
-        // TODO decrypt the password from the db and then show it on the form, masked?
-        form.setPassword("");
-        form.setCpassword("");
+            form.setPassword("");
+            form.setCpassword("");
 
-        form.setAline1(user.getAddressLine1());
-        form.setAline2(user.getAddressLine2());
-        form.setCity((user.getCity()));
-        // TODO The state field is a dropdown. How do I get the entry from the database to show as the selected
-        //  value in the dropdown?
-        form.setState(user.getState());
-        form.setZip(user.getZip());
-        form.setPhone(user.getPhone());
+            form.setAline1(user.getAddressLine1());
+            form.setAline2(user.getAddressLine2());
+            form.setCity((user.getCity()));
+            form.setState(user.getState());
+            form.setZip(user.getZip());
+            form.setPhone(user.getPhone());
 
-        // if a user is editing his/her own information
-        if (email == null) {
             response.addObject("form", form);
             response.setViewName("user/useredit"); /* This is the JSP we need. */
         }
         // if an admin is editing a user's information
         else {
+            AdminUserControlFormBean form = new AdminUserControlFormBean();
+
+            user = userDao.findByEmail(email);
+
+            form.setId(user.getId());
+            form.setEmail(user.getEmail());
+            form.setFname(user.getFirstName());
+            form.setLname(user.getLastName());
+
+            form.setAline1(user.getAddressLine1());
+            form.setAline2(user.getAddressLine2());
+            form.setCity((user.getCity()));
+            form.setState(user.getState());
+            form.setZip(user.getZip());
+            form.setPhone(user.getPhone());
+
             form.setUstatus(user.getStatus().toString());
+
             response.addObject("userform", form);
             response.setViewName("admin/adminuser");
         }
+
         return response;
     }
 
@@ -125,7 +133,56 @@ public class UserController {
         String currentPrincipalName = authentication.getName();
         User loggedInUser = userDao.findByEmail(currentPrincipalName);
 
-        boolean isAdmin = userRoleDao.existsUserRoleByUserIdAndUserRoleEquals(loggedInUser.getId(), "ADMIN");
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = new ArrayList<>();
+
+            for (ObjectError error: bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+                log.info(((FieldError) error).getField() + " " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+            response.setViewName("user/useredit");
+
+            response.addObject("bindingResult", bindingResult);
+            response.addObject("errorMessages", errorMessages);
+
+            return response;
+        }
+
+        // try to load the user from db using incoming id
+        User user = userDao.findById(loggedInUser.getId());
+
+        user.setAddressLine1(form.getAline1());
+        user.setAddressLine2(form.getAline2());
+        user.setCity(form.getCity());
+        user.setState(form.getState());
+        user.setZip(form.getZip());
+        user.setPhone(form.getPhone());
+
+        // encrypt the password from the form and then save it
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
+
+        user.setStatus(User.UserStatus.ACTIVE);
+
+        // add a row for this user to the users table
+        userDao.save(user);
+
+        // form(HTML) -> form bean(form object above) -> database(user object above)
+
+        log.info(form.toString());
+
+        response.setViewName("redirect:/user/usersearch");
+        return response;
+    }
+
+    @RequestMapping (value = "admin/usereditsubmit", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView adminEditSubmit(@Valid AdminUserControlFormBean form, BindingResult bindingResult) throws Exception {
+
+        ModelAndView response = new ModelAndView();
+
+        log.info("In UserController - adminEditSubmit()");
 
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
@@ -135,80 +192,39 @@ public class UserController {
                 log.info(((FieldError) error).getField() + " " + error.getDefaultMessage());
             }
 
-            if (isAdmin) {
-                response.addObject("userform", form);
-                response.setViewName("admin/adminuser");
-            }
-            else {
-                response.addObject("form", form);
-                response.setViewName("user/useredit");
-            }
-
+            response.addObject("userform", form);
             response.addObject("bindingResult", bindingResult);
             response.addObject("errorMessages", errorMessages);
+
+            response.setViewName("admin/adminuser");
 
             return response;
         }
 
-        if (!isAdmin) {
-            // try to load the user from db using incoming id
-            User user = userDao.findById(loggedInUser.getId());
+        User user = userDao.findByEmail(form.getEmail());
 
-            user.setAddressLine1(form.getAline1());
-            user.setAddressLine2(form.getAline2());
-            user.setCity(form.getCity());
-            user.setState(form.getState());
-            user.setZip(form.getZip());
-            user.setPhone(form.getPhone());
-
-            // encrypt the password from the form and then save it
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            user.setPassword(passwordEncoder.encode(form.getPassword()));
-
-            user.setStatus(User.UserStatus.ACTIVE);
-
-            // add a row for this user to the users table
-            userDao.save(user);
-
-            // form(HTML) -> form bean(form object above) -> database(user object above)
-
-            log.info(form.toString());
-
-            response.setViewName("redirect:/user/usersearch");
+        // user does not exist, create a new user
+        if (user == null) {
+            user = new User();
         }
-        // if admin is editing a user's information
-        else {
-            User user = userDao.findByEmail(form.getEmail());
+        user.setEmail(form.getEmail());
+        user.setFirstName(form.getFname());
+        user.setLastName((form.getLname()));
+        user.setAddressLine1(form.getAline1());
+        user.setAddressLine2(form.getAline2());
+        user.setCity(form.getCity());
+        user.setState(form.getState());
+        user.setZip(form.getZip());
+        user.setPhone(form.getPhone());
 
-            // user does not exist, create a new user
-            if (user == null) {
-                user = new User();
-            }
-            user.setEmail(form.getEmail());
-            user.setFirstName(form.getFname());
-            user.setLastName((form.getLname()));
-            user.setAddressLine1(form.getAline1());
-            user.setAddressLine2(form.getAline2());
-            user.setCity(form.getCity());
-            user.setState(form.getState());
-            user.setZip(form.getZip());
-            user.setPhone(form.getPhone());
+        user.setStatus(User.UserStatus.valueOf(form.getUstatus()));
 
-            // encrypt the password from the form and then save it
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            user.setPassword(passwordEncoder.encode(form.getPassword()));
+        // add a row for this user to the users table
+        userDao.save(user);
 
-            user.setStatus(User.UserStatus.valueOf(form.getUstatus()));
+        log.info(form.toString());
 
-            // add a row for this user to the users table
-            userDao.save(user);
-
-            log.info(form.toString());
-
-            response.setViewName("redirect:/admin/adminuser");
-        }
-
-
+        response.setViewName("redirect:/admin/adminuser");
         return response;
     }
 
