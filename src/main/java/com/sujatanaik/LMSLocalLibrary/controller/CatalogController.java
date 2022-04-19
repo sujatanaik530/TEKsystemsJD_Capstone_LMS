@@ -164,6 +164,8 @@ public class CatalogController {
             log.info("Search term cannot be empty!");
         }
 
+        response.addObject("message", userbooks.stream().count() + " book(s) checked out by user.");
+
         response.addObject("search", search);
 
         response.setViewName("admin/adminsearch");

@@ -24,6 +24,6 @@ $("#myTable").on('click', '.checkoutbook', function() {
     var self = $(this).closest("tr");
     var titlevalue = self.find(".titlecol").text();
     console.log("\nSearch Title = " + titlevalue);
-    location.assign("../user/checkout/" + titlevalue);
+    location.assign("../user/checkout?title=" + titlevalue);
 });
 

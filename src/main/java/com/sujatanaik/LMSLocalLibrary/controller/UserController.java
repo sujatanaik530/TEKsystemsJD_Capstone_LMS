@@ -260,8 +260,8 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/user/checkout/{title}", method = RequestMethod.GET)
-    public ModelAndView checkoutBook(@PathVariable("title") String title) throws Exception {
+    @RequestMapping(value = "/user/checkout", method = RequestMethod.GET)
+    public ModelAndView checkoutBook(@RequestParam(required=false, name="title") String title) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("In UserController - checkoutBook()");
 

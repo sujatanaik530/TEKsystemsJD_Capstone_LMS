@@ -107,6 +107,8 @@ public class BookController {
 
         ModelAndView response = new ModelAndView();
 
+        log.info("In BookController - editBook()");
+
         Book theBook = bookDao.findDistinctByTitle(title);
 
         AddBookFormBean form = new AddBookFormBean();
@@ -123,7 +125,6 @@ public class BookController {
         response.addObject("form", form);
 
         response.setViewName("admin/adminbook");
-
         return response;
     }
 }
