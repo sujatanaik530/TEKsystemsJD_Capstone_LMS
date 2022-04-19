@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/80ef1619da.js" crossorigin="anonymous"></script>
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background: none">
 <div class="container">
@@ -19,7 +19,7 @@
             </a>
             <sec:authorize access="isAuthenticated()">
                 <em><sec:authentication property="principal.username"></sec:authentication></em>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/user/usersearch"><i class="fa-solid fa-user fa-border" title="Switch to your personal account"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/user/usersearch"><i class="fa-solid fa-user fa-border" title="Go to your personal account"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/login/logout" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </sec:authorize>
         </div>
