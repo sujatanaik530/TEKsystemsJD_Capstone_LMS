@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +36,11 @@
             <a class="index-header" href="index">
                 <i class="fa-solid fa-book"></i>&nbsp;&nbsp;The Local Library
             </a>
+            <sec:authorize access="isAuthenticated()">
+                <em><sec:authentication property="principal.username"></sec:authentication></em>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/user/usersearch"><i class="fa-solid fa-user fa-border" title="Go to your personal account"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/login/logout" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </sec:authorize>
         </div>
     </nav>
     <div class="row">

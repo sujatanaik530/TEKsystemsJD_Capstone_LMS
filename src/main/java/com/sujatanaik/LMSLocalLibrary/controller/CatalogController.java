@@ -4,6 +4,7 @@ import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.dao.UserBookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.dao.UserDAO;
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
+import com.sujatanaik.LMSLocalLibrary.database.entity.User;
 import com.sujatanaik.LMSLocalLibrary.database.entity.UserBook;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -163,6 +164,8 @@ public class CatalogController {
         else {
             log.info("Search term cannot be empty!");
         }
+
+        userbooks.forEach(ub -> log.info(ub.getBook().getTitle()));
 
         response.addObject("message", userbooks.stream().count() + " book(s) checked out by user.");
 
