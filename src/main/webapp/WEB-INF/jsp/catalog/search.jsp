@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>The Local Library</title>
     <meta charset="utf-8" />
@@ -15,21 +14,17 @@
             width: 100px;
             border: 1px solid;
         }
-
         .ratio1 {
             width: 10%;
         }
-
         .ratio5 {
             width: 50%;
         }
-
         .ratio4 {
             width: 40%;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <nav class="navbar m-3 justify-content-center">
@@ -102,5 +97,4 @@
     </div>
     <script src="../js/search.js"></script>
 </body>
-
 </html>

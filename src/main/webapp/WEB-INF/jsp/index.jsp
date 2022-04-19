@@ -18,8 +18,9 @@
                 <i class="fa-solid fa-book"></i>&nbsp;&nbsp;The Local Library
             </a>
             <sec:authorize access="isAuthenticated()">
+                <em><sec:authentication property="principal.username"></sec:authentication></em>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/user/usersearch"><i class="fa-solid fa-user fa-border" title="Switch to your personal account"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/login/logout" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-                &nbsp;&nbsp;<em><sec:authentication property="principal.username"></sec:authentication></em>
             </sec:authorize>
         </div>
     </nav>

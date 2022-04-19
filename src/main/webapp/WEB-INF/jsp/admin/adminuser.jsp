@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>The Local Library</title>
     <meta charset="utf-8" />
@@ -19,7 +18,6 @@
         }
     </style>
 </head>
-
 <body>
 <div class="container">
     <nav class="navbar m-3 justify-content-center">
@@ -50,10 +48,6 @@
     </ul>
     <br/>
     <br/>
-<%--    <div style="margin:auto;width:50%;">--%>
-<%--        <button type="button" class="btn btn-dark" id="addUser">Add a new user</button>--%>
-<%--    </div>--%>
-<%--    <br/><br/>--%>
     <div class="form-group">
         <form method="get" id="searchform" style="width:50%">
             <div class="row">
@@ -318,5 +312,4 @@
 </div>
 <script src="../js/adminuser.js"></script>
 </body>
-
 </html>

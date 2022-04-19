@@ -34,6 +34,7 @@ $("#myTable").on('click', '.editBook', function() {
     location.assign("../book/editbook?title=" + titlevalue);
 });
 
+// This is with button class = deleteBook, table id = myTable, title column class = titlecol
 $("#myTable").on('click', '.deleteBook', function() {
     var self = $(this).closest("tr");
     var titlevalue = self.find(".titlecol").text();

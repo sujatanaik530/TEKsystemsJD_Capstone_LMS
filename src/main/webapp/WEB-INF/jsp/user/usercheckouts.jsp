@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>The Local Library</title>
     <meta charset="utf-8" />
@@ -13,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/80ef1619da.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
 <div class="container">
     <nav class="navbar m-3 justify-content-center">
@@ -95,5 +93,4 @@
 </div>
 <script src="../js/usercheckouts.js"></script>
 </body>
-
 </html>

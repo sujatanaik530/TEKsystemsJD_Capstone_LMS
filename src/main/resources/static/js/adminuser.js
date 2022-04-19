@@ -1,10 +1,3 @@
-// let addUserButton = document.getElementById("addUser");
-// addUserButton.addEventListener("click", goAddUserPage);
-
-function goAddUserPage() {
-    location.assign("../user/adduser");
-}
-
 let searchText = document.getElementById("search");
 
 let searchButton = document.getElementById("searchButton");
@@ -26,13 +19,14 @@ function goSearchResults() {
     }
 }
 
-// This is with button class = editUser, table id = myTable, title column class = titlecol
+// This is with button class = editUser, table id = myTable, title column class = emailvalue
 $("#myTable").on('click', '.editUser', function() {
     var self = $(this).closest("tr");
     var emailvalue = self.find(".emailcol").text();
     location.assign("../user/edit?email=" + emailvalue);
 });
 
+// This is with button class = deleteUser, table id = myTable, title column class = emailvalue
 $("#myTable").on('click', '.deleteUser', function() {
     var self = $(this).closest("tr");
     var emailvalue = self.find(".emailcol").text();

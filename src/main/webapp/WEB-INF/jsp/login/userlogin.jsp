@@ -47,6 +47,5 @@
         </div>
     </div>
 </div>
-<!--<script src="../js/userlogin.js"></script>-->
 </body>
 </html>
