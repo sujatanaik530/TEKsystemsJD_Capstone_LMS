@@ -16,7 +16,7 @@ public interface UserBookDAO extends JpaRepository<UserBook, Long> {
     UserBook findByUserIdAndBookId(@Param("user_id") Integer userId, @Param("book_id") Integer bookId);
 
 //    List<UserBook> findByUserId(@Param("user_id") Integer userId);
-    
+
     // Non-native or JPQL query requirement - used in viewing checkouts
     @Query(value = "SELECT u FROM UserBook u WHERE u.user.id = :user_id")
     List<UserBook> findByUserId(@Param("user_id") Integer userId);
