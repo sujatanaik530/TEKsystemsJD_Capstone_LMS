@@ -70,3 +70,21 @@ tr {
 #libmsg {
     background-color: palegoldenrod;
 }
+
+.bookimg {
+     width: 100px;
+     border: 1px solid;
+}
+
+.ratio1 {
+    width: 10%;
+}
+
+.ratio5 {
+    width: 50%;
+}
+
+.ratio4 {
+    width: 40%;
+}
+

@@ -1,17 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>The Local Library</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/styles.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/80ef1619da.js" crossorigin="anonymous"></script>
-</head>
+<jsp:include page="../include/header.jsp" />
 <body>
 <div class="container">
     <nav class="navbar m-3 justify-content-center">
@@ -65,7 +54,7 @@
             <tbody>
                 <c:forEach items="${borrowed}" var="borrowedbook">
                 <tr>
-                    <td style="width:10%"><img src="${borrowedbook.book.img}"/></td>
+                    <td style="width:10%"><img src="${borrowedbook.book.img}" class="bookimg"/></td>
                     <td class="titlecol">${borrowedbook.book.title}</td>
                     <td>${borrowedbook.dueDate}</td>
                     <td>
@@ -92,5 +81,4 @@
     </div>
 </div>
 <script src="../js/usercheckouts.js"></script>
-</body>
-</html>
+<jsp:include page="../include/footer.jsp" />

@@ -1,4 +1,5 @@
 <jsp:include page="../include/header.jsp" />
+<body>
 <h1 class="text-center m-5">Error Page</h1>
 <c:if test="${not empty requestUrl}">
     <p>${requestUrl}</p>
