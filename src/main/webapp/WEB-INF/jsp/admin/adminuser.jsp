@@ -68,7 +68,6 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody id="libusers">
@@ -79,9 +78,6 @@
                 <td>
                     <input type="button" class="editUser" value="Edit">
                 </td>
-                <td>
-                    <input type="button" class="deleteUser" value="Delete">
-                </td>
             </tr>
             </tbody>
             <tfoot class="table-dark">
@@ -90,7 +86,6 @@
                 <td class="foot"></td>
                 <td class="foot"></td>
                 <td class="foot"></td>
-                <td></td>
             </tr>
             </tfoot>
             </c:if>
@@ -99,7 +94,6 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -112,9 +106,6 @@
                     <td>
                         <input type="button" class="editUser" value="Edit">
                     </td>
-                    <td>
-                        <input type="button" class="deleteUser" value="Delete">
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -124,7 +115,6 @@
                 <td class="foot"></td>
                 <td class="foot"></td>
                 <td class="foot"></td>
-                <td></td>
             </tr>
             </tfoot>
             </c:if>

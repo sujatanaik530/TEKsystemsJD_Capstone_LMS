@@ -72,7 +72,6 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody id="books">
@@ -84,9 +83,6 @@
                     <td>
                         <input type="button" class="editBook" value="Edit">
                     </td>
-                    <td>
-                        <input type="button" class="deleteBook" value="Delete">
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -96,7 +92,6 @@
                 <td class="foot"></td>
                 <td class="foot"></td>
                 <td class="foot"></td>
-                <td></td>
             </tr>
             </tfoot>
             </c:if>
