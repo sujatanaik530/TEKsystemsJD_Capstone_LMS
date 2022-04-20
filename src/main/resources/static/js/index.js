@@ -7,7 +7,7 @@ function goGoodReadsPage() {
 }
 
 function goPatronLoginPage() {
-    location.assign("login/login");
+    location.assign("login/login/Welcome!");
 }
 
 function goPatronRegistrationPage() {

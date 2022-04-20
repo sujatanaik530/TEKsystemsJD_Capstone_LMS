@@ -1,13 +1,21 @@
 <jsp:include page="../include/header.jsp" />
 <body>
+<link rel="stylesheet" href="../../css/styles.css">
 <div class="container">
     <nav class="navbar m-3 justify-content-center">
         <div class="container-fluid">
-            <a class="index-header" href="../index">
+<%--            <a class="index-header" href="../index">--%>
+                <a class="index-header" href="http://localhost:8080/index">
                 <i class="fa-solid fa-book"></i>&nbsp;&nbsp;The Local Library
             </a>
         </div>
     </nav>
+    <c:if test="${not empty message}">
+        <div>
+            <h2 class="text-center m-4">${message}</h2>
+        </div>
+        <br />
+    </c:if>
     <div id="patronform">
         <h2 class="text-center m-4">User Login</h2>
         <div class="form-group">

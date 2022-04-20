@@ -23,7 +23,6 @@ public class ErrorController {
         String originalUri = (String) request.getAttribute("javax.servlet.forward.request_uri");
         log.error("Requested URL not found : " + request.getMethod() + " " + originalUri);
 
-        // TODO customize error page
         return "error/404";
     }
 

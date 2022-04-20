@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,18 +40,19 @@ public class LoginController {
      * NOT USED ANYMORE
      */
 
-//    @RequestMapping(value="/login/userlogin", method= RequestMethod.GET)
-//    public ModelAndView loginOriginal() throws Exception {
-//        ModelAndView response = new ModelAndView();
-//        log.info("In UserController - loginOriginal()");
-//        response.setViewName("login/userlogin");
-//        return response;
-//    }
+    @RequestMapping(value="/login/login/{msg}", method = RequestMethod.GET)
+    public ModelAndView login(@PathVariable("msg") String msg) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In LoginController - login1() " + msg);
+        response.addObject("message", msg);
+        response.setViewName("/login/userlogin");
+        return response;
+    }
 
-    @RequestMapping(value="/login/login", method = RequestMethod.GET)
+    @RequestMapping(value="/login/userlogin", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In LoginController - login()");
+        log.info("In LoginController - login2()");
         response.setViewName("login/userlogin");
         return response;
     }
@@ -60,6 +62,7 @@ public class LoginController {
      * This is the user registration page of the library management system.
      */
 
+    // TODO What happens if someone is logged in and tries to access the registration page?
     @RequestMapping(value="/login/userregistration", method= RequestMethod.GET)
     public ModelAndView registration() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -143,7 +146,6 @@ public class LoginController {
         // if an admin is registering a new user, redirect to /admin/adminuser
 
         // using authentication information, to check if any one is logged in
-        // TODO Fix this: any logged in user can create a new user using the URL http://localhost:8080/user/adduser
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User loggedInUser = userDao.findByEmail(currentPrincipalName);
