@@ -44,9 +44,19 @@ public class LoginController {
     public ModelAndView login(@PathVariable("msg") String msg) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("In LoginController - login1() " + msg);
-        response.addObject("message", msg);
-        response.setViewName("/login/userlogin");
-        return response;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if (!currentPrincipalName.equals("anonymousUser")) {
+            response.setViewName("redirect:/index");
+            return response;
+        }
+        else {
+            response.addObject("message", msg);
+            response.setViewName("/login/userlogin");
+            return response;
+        }
     }
 
     @RequestMapping(value="/login/userlogin", method = RequestMethod.GET)
@@ -69,12 +79,21 @@ public class LoginController {
 
         log.info("In LoginController - registration()");
 
-        response.setViewName("login/userregistration");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
-        PatronRegisterFormBean form = new PatronRegisterFormBean();
-        response.addObject("form", form);
+        if (!currentPrincipalName.equals("anonymousUser")) {
+            response.setViewName("redirect:/index");
+            return response;
+        }
+        else {
+            response.setViewName("login/userregistration");
 
-        return response;
+            PatronRegisterFormBean form = new PatronRegisterFormBean();
+            response.addObject("form", form);
+
+            return response;
+        }
     }
 
     /**
