@@ -1,6 +1,7 @@
 package com.sujatanaik.LMSLocalLibrary.database.dao;
 
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
+import com.sujatanaik.LMSLocalLibrary.database.entity.BorrowedBook;
 import com.sujatanaik.LMSLocalLibrary.database.entity.User;
 import com.sujatanaik.LMSLocalLibrary.database.entity.UserBook;
 import org.junit.jupiter.api.*;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -46,6 +48,8 @@ public class UserBookDAOTest {
         theUser.setZip("11111");
         theUser.setPhone("1111111111");
         theUser.setState("Minnesota");
+        theUser.setNews(User.UserNews.YES);
+        theUser.setGender(User.UserGender.FEMALE);
 
         userDao.save(theUser);
 
@@ -59,6 +63,7 @@ public class UserBookDAOTest {
     }
 
     @Order(1)
+    @Test
     public void findByUserId() {
         User theUser = userDao.findByEmail("sn@gmail.com");
         List<UserBook> theCheckout = userBookDao.findByUserId(theUser.getId());
@@ -66,20 +71,45 @@ public class UserBookDAOTest {
     }
 
     @Order(2)
+    @Test
     public void findUserBooksByEmail() {
         List<UserBook> theCheckout = userBookDao.findUserBooksByEmail("sn@gmail.com");
         assertNotNull(theCheckout);
     }
 
     @Order(3)
+    @Test
     public void findUserBooksByTitle() {
         List<UserBook> theCheckout = userBookDao.findUserBooksByTitle("The New Book");
         assertNotNull(theCheckout);
     }
 
     @Order(4)
+    @Test
     public void findUserBooksByAuthor() {
         List<UserBook> theCheckout = userBookDao.findUserBooksByAuthor("Sujata Naik");
         assertNotNull(theCheckout);
+    }
+
+    @Order(5)
+    @Test
+    public void updateUserBook() {
+        User theUser = userDao.findByEmail("sn@gmail.com");
+        Book theBook = bookDao.findDistinctByTitle("The New Book");
+        UserBook theCheckout = userBookDao.findByUserIdAndBookId(theUser.getId(), theBook.getId());
+        theCheckout.setDueDate(theCheckout.getBorrowDate());
+        theCheckout = userBookDao.findByUserIdAndBookId(theUser.getId(), theBook.getId());
+        Assertions.assertEquals(theCheckout.getBorrowDate(), theCheckout.getDueDate());
+    }
+
+    @Order(6)
+    @Test
+    public void deleteByUserIdAndBookId() {
+        User theUser = userDao.findByEmail("sn@gmail.com");
+        Book theBook = bookDao.findDistinctByTitle("The New Book");
+        UserBook theCheckout = userBookDao.findByUserIdAndBookId(theUser.getId(), theBook.getId());
+        userBookDao.deleteByUserIdAndBookId(theUser.getId(), theBook.getId());
+        theCheckout = userBookDao.findByUserIdAndBookId(theUser.getId(), theBook.getId());
+        assertNull(theCheckout);
     }
 }

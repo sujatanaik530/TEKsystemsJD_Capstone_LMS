@@ -72,7 +72,6 @@ public class LoginController {
      * This is the user registration page of the library management system.
      */
 
-    // TODO What happens if someone is logged in and tries to access the registration page?
     @RequestMapping(value="/login/userregistration", method= RequestMethod.GET)
     public ModelAndView registration() throws Exception {
         ModelAndView response = new ModelAndView();

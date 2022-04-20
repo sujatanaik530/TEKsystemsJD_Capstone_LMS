@@ -38,10 +38,10 @@ public class CatalogController {
      */
 
     @RequestMapping(value="/goodreads", method= RequestMethod.GET)
-    public ModelAndView goodreads() throws Exception {
+    public ModelAndView goodReads() throws Exception {
         ModelAndView response = new ModelAndView();
 
-        log.info("In CatalogController - goodreads()");
+        log.info("In CatalogController - goodReads()");
 
         List<Book> books = bookDao.findAll();
         response.addObject("books", books);

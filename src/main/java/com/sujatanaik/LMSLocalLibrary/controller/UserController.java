@@ -458,18 +458,6 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value="/user/deleteuser", method= RequestMethod.GET)
-    public ModelAndView deleteUser() throws Exception {
-        ModelAndView response = new ModelAndView();
-        log.info("In UserController - deleteUser()");
-
-        // TODO Do we need to implement delete user by admin?
-
-        response.setViewName("admin/adminuser");
-        return response;
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbyfirstname", method= RequestMethod.GET)
     public ModelAndView searchUserByFirstName(@RequestParam(name = "searchFN", required = false) String fname) throws Exception {
         ModelAndView response = new ModelAndView();

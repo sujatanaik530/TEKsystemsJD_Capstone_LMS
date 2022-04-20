@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -68,5 +69,22 @@ public class BookDAOTest {
     public void findBookByAuthorAndAvailableTest(String author) {
         List<Book> checkBook = bookDao.findBookByAuthorAndAvailable(author);
         Assertions.assertThat(checkBook.get(0).getTitle().equals(author));
+    }
+
+    @Test
+    @Order(4)
+    public void updateBook() {
+        Book checkBook = bookDao.findDistinctByTitle("The New Book");
+        checkBook.setPrice(19.99);
+        Assertions.assertThat(bookDao.findDistinctByTitle("The New Book").getPrice().equals(checkBook.getPrice()));
+    }
+
+    @Test
+    @Order(5)
+    public void deleteBook() {
+        Book checkBook = bookDao.findDistinctByTitle("The New Book");
+        bookDao.delete(checkBook);
+        checkBook = bookDao.findDistinctByTitle("The New Book");
+        assertNull(checkBook);
     }
 }

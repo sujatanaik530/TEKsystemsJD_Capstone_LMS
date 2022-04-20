@@ -25,9 +25,9 @@ public class AdminController {
     BookDAO bookDao;
 
     @RequestMapping(value="/admin/adminsearch", method= RequestMethod.GET)
-    public ModelAndView adminsearch() throws Exception {
+    public ModelAndView adminSearch() throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In AdminController - adminsearch()");
+        log.info("In AdminController - adminSearch()");
         response.setViewName("admin/adminsearch");
         return response;
     }
@@ -111,17 +111,17 @@ public class AdminController {
     }
 
     @RequestMapping(value="/admin/adminuser", method= RequestMethod.GET)
-    public ModelAndView adminuser() throws Exception {
+    public ModelAndView adminUser() throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In AdminController - adminuser()");
+        log.info("In AdminController - adminUser()");
         response.setViewName("admin/adminuser");
         return response;
     }
 
     @RequestMapping(value="/admin/adminbook", method= RequestMethod.GET)
-    public ModelAndView adminbook() throws Exception {
+    public ModelAndView adminBook() throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In AdminController - adminbook()");
+        log.info("In AdminController - adminBook()");
         response.setViewName("admin/adminbook");
         return response;
     }

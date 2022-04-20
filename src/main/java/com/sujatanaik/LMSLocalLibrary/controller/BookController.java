@@ -51,11 +51,11 @@ public class BookController {
      * This method is used for "create" or "edit", based on the "id" value.
      */
     @RequestMapping (value = "book/addbooksubmit", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView addbookSubmit(@Valid AddBookFormBean form, BindingResult bindingResult) throws Exception {
+    public ModelAndView addBookSubmit(@Valid AddBookFormBean form, BindingResult bindingResult) throws Exception {
 
         ModelAndView response = new ModelAndView();
 
-        log.info("In BookController - addbookSubmit()");
+        log.info("In BookController - addBookSubmit()");
 
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
