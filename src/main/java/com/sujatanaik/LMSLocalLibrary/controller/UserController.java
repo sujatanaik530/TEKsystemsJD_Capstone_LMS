@@ -8,6 +8,7 @@ import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,6 +53,7 @@ public class UserController {
      * This method is for editing a user's information. There is a path parameter being used to pass the userid
      * from the user to be edited.
      */
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping (value = "/user/edit", method = RequestMethod.GET) /* This is the URL part after localhost:8080. */
     public ModelAndView editUser(@RequestParam(required=false, name="email") String email) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -121,6 +123,7 @@ public class UserController {
      * This method handles the localhost:8080/login/userregistrationsubmit.
      * This is the processing of the submit of the user registration page of the library management system.
      */
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping (value = "user/usereditsubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView editSubmit(@Valid PatronEditFormBean form, BindingResult bindingResult) throws Exception {
 
@@ -177,6 +180,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping (value = "admin/usereditsubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView adminEditSubmit(@Valid AdminUserControlFormBean form, BindingResult bindingResult) throws Exception {
 
@@ -228,6 +232,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/user/usercheckouts", method= RequestMethod.GET)
     public ModelAndView checkouts() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -252,14 +257,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value="/user/userdash", method= RequestMethod.GET)
-    public ModelAndView userdashboard() throws Exception {
-        ModelAndView response = new ModelAndView();
-        log.info("In UserController - userdashboard()");
-        response.setViewName("user/userdash");
-        return response;
-    }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value = "/user/checkout", method = RequestMethod.GET)
     public ModelAndView checkoutBook(@RequestParam(required=false, name="title") String title) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -344,6 +342,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping(value = "/user/renew", method = RequestMethod.GET)
     public ModelAndView renewBook(@RequestParam(required=false, name="title") String title) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -382,6 +381,7 @@ public class UserController {
     }
 
     @Transactional
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping(value = "/user/return", method = RequestMethod.GET)
     public ModelAndView returnBook(@RequestParam(required=false, name="title") String title) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -421,6 +421,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/adduser", method= RequestMethod.GET)
     public ModelAndView addUser() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -433,6 +434,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/deleteuser", method= RequestMethod.GET)
     public ModelAndView deleteUser() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -444,6 +446,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbyfirstname", method= RequestMethod.GET)
     public ModelAndView searchUserByFirstName(@RequestParam(name = "searchFN", required = false) String fname) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -467,6 +470,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbylastname", method= RequestMethod.GET)
     public ModelAndView searchUserByLastName(@RequestParam(name = "searchLN", required = false) String lname) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -490,6 +494,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbyemail", method= RequestMethod.GET)
     public ModelAndView searchUserByEmail(@RequestParam(name = "searchEmail", required = false) String email) throws Exception {
         ModelAndView response = new ModelAndView();

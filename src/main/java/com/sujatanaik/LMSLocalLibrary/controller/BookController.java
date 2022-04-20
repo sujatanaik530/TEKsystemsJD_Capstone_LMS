@@ -23,6 +23,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 public class BookController {
 
     @Autowired
@@ -32,7 +33,6 @@ public class BookController {
      * This method handles the localhost:8080/book/addbook.
      * This is the new book page of the library management system, where a librarian can add a new book to the database.
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/book/addbook", method = RequestMethod.GET)
     public ModelAndView addBook() throws Exception {
         ModelAndView response = new ModelAndView();

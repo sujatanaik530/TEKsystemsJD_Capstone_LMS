@@ -2,12 +2,10 @@ package com.sujatanaik.LMSLocalLibrary.controller;
 
 import com.sujatanaik.LMSLocalLibrary.database.dao.BookDAO;
 import com.sujatanaik.LMSLocalLibrary.database.entity.Book;
-import com.sujatanaik.LMSLocalLibrary.formbean.AddBookFormBean;
-import com.sujatanaik.LMSLocalLibrary.formbean.PatronRegisterFormBean;
-import com.sujatanaik.LMSLocalLibrary.formbean.SearchFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +18,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')") // class level, can also be method level
 public class AdminController {
 
     @Autowired

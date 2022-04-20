@@ -9,6 +9,7 @@ import com.sujatanaik.LMSLocalLibrary.database.entity.UserBook;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,7 @@ public class CatalogController {
      * This method handles the localhost:8080/catalog/search.
      * This is the search page of the library management system, where a user can search the catalog by a keyword.
      */
-    //@GetMapping(value="/catalog/search")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/user/usersearch")
     public ModelAndView search() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -66,6 +67,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchtitle")
     public ModelAndView searchByTitle(@RequestParam(required=false, name="searchT") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -92,6 +94,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchauthor")
     public ModelAndView searchByAuthor(@RequestParam(required=false, name="searchA") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -118,6 +121,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchcategory")
     public ModelAndView searchByCategory(@RequestParam(required=false, name="searchC") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -144,6 +148,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedoutbyuser")
     public ModelAndView searchCheckedOutByUser(@RequestParam(required=false, name="search") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -176,6 +181,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/availabletitles")
     public ModelAndView searchAvailableTitles(@RequestParam(required=false, name="search") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -202,6 +208,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedouttitles")
     public ModelAndView searchCheckedOutTitles(@RequestParam(required=false, name="search") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -228,6 +235,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/availableauthors")
     public ModelAndView searchAvailableAuthors(@RequestParam(required=false, name="search") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -254,6 +262,7 @@ public class CatalogController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedoutauthors")
     public ModelAndView searchCheckedOutAuthors(@RequestParam(required=false, name="search") String search) throws Exception {
         ModelAndView response = new ModelAndView();
