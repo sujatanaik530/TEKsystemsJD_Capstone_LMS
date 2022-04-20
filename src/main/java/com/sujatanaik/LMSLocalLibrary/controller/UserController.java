@@ -88,6 +88,8 @@ public class UserController {
             form.setState(user.getState());
             form.setZip(user.getZip());
             form.setPhone(user.getPhone());
+            form.setGender(user.getGender().toString());
+            form.setNews(user.getNews().toString());
 
             response.addObject("form", form);
             response.setViewName("user/useredit"); /* This is the JSP we need. */
@@ -111,6 +113,11 @@ public class UserController {
             form.setPhone(user.getPhone());
 
             form.setUstatus(user.getStatus().toString());
+
+            form.setGender(user.getGender().toString());
+            form.setNews(user.getNews().toString());
+
+            form.setNews(user.getNews().toString());
 
             response.addObject("userform", form);
             response.setViewName("admin/adminuser");
@@ -162,6 +169,14 @@ public class UserController {
         user.setState(form.getState());
         user.setZip(form.getZip());
         user.setPhone(form.getPhone());
+        user.setGender(User.UserGender.valueOf(form.getGender()));
+
+        if (form.getNews() == null) {
+            user.setNews(User.UserNews.NO);
+        }
+        else {
+            user.setNews(User.UserNews.valueOf(form.getNews()));
+        }
 
         // encrypt the password from the form and then save it
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -220,6 +235,14 @@ public class UserController {
         user.setState(form.getState());
         user.setZip(form.getZip());
         user.setPhone(form.getPhone());
+        user.setGender(User.UserGender.valueOf(form.getGender()));
+
+        if (form.getNews() == null) {
+            user.setNews(User.UserNews.NO);
+        }
+        else {
+            user.setNews(User.UserNews.valueOf(form.getNews()));
+        }
 
         user.setStatus(User.UserStatus.valueOf(form.getUstatus()));
 

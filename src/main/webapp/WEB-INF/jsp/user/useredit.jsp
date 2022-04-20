@@ -140,6 +140,24 @@
                 </div>
                 <div class="row m-2 p-2">
                     <div class="col-md-6">
+                        <input type="radio" id="male" name="gender" value="MALE" <c:if test="${form.gender == \"MALE\"}">
+                               checked
+                        </c:if>>
+                        <label for="male">Male</label><br>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="radio" id="female" name="gender" value="FEMALE" <c:if test="${form.gender == \"FEMALE\"}">
+                               checked
+                        </c:if>>
+                        <label for="female">Female</label><br>
+                    </div>
+                    <p class="hiddenMsg"></p>
+                    <c:forEach items="${bindingResult.getFieldErrors('phone')}" var="error">
+                        <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                    </c:forEach>
+                </div>
+                <div class="row m-2 p-2">
+                    <div class="col-md-6">
                         <label for="password" class="form-label">Password:</label>
                         <input type="password" class="form-control border border-2 border-dark" id="password"
                                placeholder="Enter password" name="password" value="${form.password}" />
@@ -153,6 +171,14 @@
                         <input type="password" class="form-control border border-2 border-dark" id="cpassword"
                                placeholder="Confirm password" name="cpassword" value="${form.cpassword}" />
                         <p class="hiddenMsg form-text"></p>
+                    </div>
+                </div>
+                <div class="row m-2 p-2">
+                    <div>
+                        <input type="checkbox" id="news" name="news" value="YES"<c:if test="${form.news == \"YES\"}">
+                               checked
+                        </c:if>>
+                        <label for="news">  I would like to receive a monthly newsletter.</label><br>
                     </div>
                 </div>
                 <div class="m-4 p-2">

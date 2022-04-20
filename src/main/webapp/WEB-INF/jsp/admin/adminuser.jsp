@@ -264,6 +264,24 @@
                                 </c:forEach>
                             </div>
                         </div>
+                        <div class="row m-2 p-2">
+                            <div class="col-md-6">
+                                <input type="radio" id="male" name="gender" value="MALE" <c:if test="${userform.gender == \"MALE\"}">
+                                       checked
+                                </c:if>>
+                                <label for="male">Male</label><br>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="radio" id="female" name="gender" value="FEMALE" <c:if test="${userform.gender == \"FEMALE\"}">
+                                       checked
+                                </c:if>>
+                                <label for="female">Female</label><br>
+                            </div>
+                            <p class="hiddenMsg"></p>
+                            <c:forEach items="${bindingResult.getFieldErrors('phone')}" var="error">
+                                <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
+                            </c:forEach>
+                        </div>
                         <sec:authorize access="!hasAuthority('ADMIN')">
                         <div class="row m-2 p-2">
                             <div class="col-md-6">
@@ -283,6 +301,14 @@
                             </div>
                         </div>
                         </sec:authorize>
+                        <div class="row m-2 p-2">
+                            <div>
+                                <input type="checkbox" id="news" name="news" value="YES"<c:if test="${userform.news == \"YES\"}">
+                                       checked
+                                </c:if>>
+                                <label for="news">  I would like to receive a monthly newsletter.</label><br>
+                            </div>
+                        </div>
                         <div class="m-4 p-2">
                             <button type="submit" class="btn btn-dark" id="create">Update user information</button>
                         </div>

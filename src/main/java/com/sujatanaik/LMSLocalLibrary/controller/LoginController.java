@@ -121,6 +121,14 @@ public class LoginController {
         user.setState(form.getState());
         user.setZip(form.getZip());
         user.setPhone(form.getPhone());
+        user.setGender(User.UserGender.valueOf(form.getGender()));
+
+        if (form.getNews() == null) {
+            user.setNews(User.UserNews.NO);
+        }
+        else {
+            user.setNews((User.UserNews.valueOf(form.getNews())));
+        }
 
         // encrypt the password from the form and then save it
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

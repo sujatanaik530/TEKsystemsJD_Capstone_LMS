@@ -54,6 +54,22 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    public enum UserGender {
+        MALE,
+        FEMALE;
+    }
+    @Column (name = "gender", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private UserGender gender;
+
+    public enum UserNews {
+        YES,
+        NO;
+    }
+    @Column (name = "news", nullable = false, length = 5)
+    @Enumerated(EnumType.STRING)
+    private UserNews news;
+
     @Column (name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;

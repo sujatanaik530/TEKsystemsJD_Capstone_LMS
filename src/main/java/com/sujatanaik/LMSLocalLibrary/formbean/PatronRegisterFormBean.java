@@ -32,8 +32,6 @@ public class PatronRegisterFormBean {
     private String lname;
 
     @NotBlank (message = "Please enter a password.")
-    //@Pattern(regexp = "[a-zA-Z]", message = "Password must have at least one alphabet")
-    //@Pattern(regexp = "[0-9]", message = "Password must have at least one digit.")
     @Length(min = 3, max = 15, message = "Password must be between 3 and 15 characters in length.")
     private String password;
 
@@ -60,6 +58,11 @@ public class PatronRegisterFormBean {
     @NotBlank (message = "Please enter a phone number.")
     @Pattern(regexp = "[0-9]{10}", message = "Please enter a valid phone number using 10 digits.")
     private String phone;
+
+    @NotBlank (message = "Please select a gender.")
+    private String gender;
+
+    private String news;
 
     private String ustatus;
 }
