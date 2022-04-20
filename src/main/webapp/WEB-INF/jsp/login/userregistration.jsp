@@ -117,11 +117,11 @@
                 </div>
                 <div class="row m-2 p-2">
                     <div class="col-md-6">
-                        <input type="radio" id="male" name="gender" value="Male">
+                        <input type="radio" id="male" name="gender" value="MALE">
                         <label for="male">Male</label><br>
                     </div>
                     <div class="col-md-6">
-                        <input type="radio" id="female" name="gender" value="Female">
+                        <input type="radio" id="female" name="gender" value="FEMALE">
                         <label for="female">Female</label><br>
                     </div>
                     <p class="hiddenMsg"></p>

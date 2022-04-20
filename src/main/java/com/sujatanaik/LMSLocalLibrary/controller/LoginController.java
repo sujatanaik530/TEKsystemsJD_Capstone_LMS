@@ -43,7 +43,7 @@ public class LoginController {
     @RequestMapping(value="/login/login/{msg}", method = RequestMethod.GET)
     public ModelAndView login(@PathVariable("msg") String msg) throws Exception {
         ModelAndView response = new ModelAndView();
-        log.info("In LoginController - login1() " + msg);
+        log.info("In LoginController - login() " + msg);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -54,6 +54,24 @@ public class LoginController {
         }
         else {
             response.addObject("message", msg);
+            response.setViewName("/login/userlogin");
+            return response;
+        }
+    }
+
+    @RequestMapping(value="/login/login", method = RequestMethod.GET)
+    public ModelAndView loginAfterRegistering() throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("In LoginController - login() without PathVariable");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        if (!currentPrincipalName.equals("anonymousUser")) {
+            response.setViewName("redirect:/index");
+            return response;
+        }
+        else {
             response.setViewName("/login/userlogin");
             return response;
         }
