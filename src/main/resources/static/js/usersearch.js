@@ -6,15 +6,15 @@ searchButton.addEventListener("click", goSearchResults);
 function goSearchResults() {
     let searchBy = document.getElementById("searchBy").value;
     if (searchBy == "Author") {
-        let fullURL = "../catalog/searchauthor?searchA=" + searchText.value;
+        let fullURL = "../catalog/searchauthor?searchA=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
     else if (searchBy == "Title") {
-        let fullURL = "../catalog/searchtitle?searchT=" + searchText.value;
+        let fullURL = "../catalog/searchtitle?searchT=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
     else if (searchBy == "Category") {
-        let fullURL = "../catalog/searchcategory?searchC=" + searchText.value;
+        let fullURL = "../catalog/searchcategory?searchC=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
 }
@@ -24,6 +24,6 @@ $("#myTable").on('click', '.checkoutbook', function() {
     var self = $(this).closest("tr");
     var titlevalue = self.find(".titlecol").text();
     console.log("\nSearch Title = " + titlevalue);
-    location.assign("../user/checkout?title=" + titlevalue);
+    location.assign("../user/checkout?title=" + encodeURIComponent(titlevalue));
 });
 
