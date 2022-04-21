@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ErrorController {
 
+    /**
+     * This method handles the /error/404 URL which is also a 'Page Not Found' error.
+     * @param request the HTTP request details
+     * @return error/404
+     */
     @ExceptionHandler(AccessDeniedException.class) // We don't want to tell the "bad user" that this is a protected URL.
     @RequestMapping(value = "/error/404")
     public String error404(HttpServletRequest request) {
@@ -26,7 +31,12 @@ public class ErrorController {
         return "error/404";
     }
 
-    // This method is for all 500 errors for any exception that is thrown.
+    /**
+     * This method handles any exception which is thrown.
+     * @param request the HTTP request details
+     * @param ex the exception details
+     * @return error/500
+     */
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllExceptions(HttpServletRequest request, Exception ex) {
         ModelAndView model = new ModelAndView();
@@ -51,6 +61,11 @@ public class ErrorController {
         return model;
     }
 
+    /**
+     * This method is a helper method for the handleAllExceptions exception handler method.
+     * @param request
+     * @return string with URL
+     */
     private String getRequestURL(HttpServletRequest request) {
         String result = request.getRequestURL().toString();
         if (request.getQueryString() != null) {
@@ -59,6 +74,11 @@ public class ErrorController {
         return result;
     }
 
+    /**
+     * This method is a helper method for the handleAllExceptions exception handler method.
+     * @param stack
+     * @return part of the stack trace
+     */
     private String getHTMLStackTrace(String[] stack) {
         StringBuffer result = new StringBuffer();
 

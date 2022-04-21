@@ -31,12 +31,11 @@ public class CatalogController {
     private UserBookDAO userBookDao;
 
     /**
-     * This method handles the localhost:8080/goodreads
-     * This is the "good reads" (recommendations) page of the library management system.
-     *
-     * To do: recommend 5 random books
+     * This method handles the goodreads URL, which just displays all the books in the books table. I want to implement a
+     * random book recommender here.
+     * @return goodreads
+     * @throws Exception
      */
-
     @RequestMapping(value="/goodreads", method= RequestMethod.GET)
     public ModelAndView goodReads() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -52,8 +51,10 @@ public class CatalogController {
     }
 
     /**
-     * This method handles the localhost:8080/catalog/search.
+     * This method handles the catalog/search URL.
      * This is the search page of the library management system, where a user can search the catalog by a keyword.
+     * @return user/usersearch
+     * @throws Exception
      */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/user/usersearch")
@@ -67,6 +68,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/searchtitle URL.
+     * This is the search page of the library management system, where a user can search the catalog by a keyword.
+     * @param search term in titles of books table
+     * @return user/usersearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchtitle")
     public ModelAndView searchByTitle(@RequestParam(required=false, name="searchT") String search) throws Exception {
@@ -94,6 +102,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/searchauthor URL.
+     * This is the search page of the library management system, where a user can search the catalog by a keyword.
+     * @param search term in author names of books table
+     * @return user/usersearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchauthor")
     public ModelAndView searchByAuthor(@RequestParam(required=false, name="searchA") String search) throws Exception {
@@ -121,6 +136,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/searchcategory URL.
+     * This is the search page of the library management system, where a user can search the catalog by a keyword.
+     * @param search term in category names of books table
+     * @return user/usersearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value="/catalog/searchcategory")
     public ModelAndView searchByCategory(@RequestParam(required=false, name="searchC") String search) throws Exception {
@@ -148,6 +170,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/checkedoutbyuser URL.
+     * This is the search page of the library management system, where an admin can search the checkouts by a keyword.
+     * @param search term in emails of userbooks table
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedoutbyuser")
     public ModelAndView searchCheckedOutByUser(@RequestParam(required=false, name="search") String search) throws Exception {
@@ -181,6 +210,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/availabletitles URL.
+     * This is the search page of the library management system, where an admin can search the avaiable books by a keyword.
+     * @param search term in titles of available books in books table
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/availabletitles")
     public ModelAndView searchAvailableTitles(@RequestParam(required=false, name="search") String search) throws Exception {
@@ -208,6 +244,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/availabletitles URL.
+     * This is the search page of the library management system, where an admin can search the checked out books by a keyword.
+     * @param search term in titles of checked out books in userbooks table
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedouttitles")
     public ModelAndView searchCheckedOutTitles(@RequestParam(required=false, name="search") String search) throws Exception {
@@ -235,6 +278,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/availableauthors URL.
+     * This is the search page of the library management system, where an admin can search the available books by a keyword.
+     * @param search term in author names of available books in books table
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/availableauthors")
     public ModelAndView searchAvailableAuthors(@RequestParam(required=false, name="search") String search) throws Exception {
@@ -262,6 +312,13 @@ public class CatalogController {
         return response;
     }
 
+    /**
+     * This method handles the catalog/checkedoutauthors URL.
+     * This is the search page of the library management system, where an admin can search the checked out books by a keyword.
+     * @param search term in author names of checked out books in userbooks table
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value="/catalog/checkedoutauthors")
     public ModelAndView searchCheckedOutAuthors(@RequestParam(required=false, name="search") String search) throws Exception {

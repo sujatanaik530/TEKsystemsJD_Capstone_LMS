@@ -77,7 +77,7 @@
             <tbody id="books">
             <c:forEach items="${books}" var="book">
                 <tr>
-                    <td><img src="${book.img}"/></td>
+                    <td><img src="${book.img}" class="bookimg"/></td>
                     <td class="titlecol">${book.title}</td>
                     <td>${book.author}</td>
                     <td>

@@ -30,8 +30,11 @@ public class BookController {
     private BookDAO bookDao;
 
     /**
-     * This method handles the localhost:8080/book/addbook.
+     * This method handles the book/addbook URL.
+     * This request originates in admin/adminbook.jsp.
      * This is the new book page of the library management system, where a librarian can add a new book to the database.
+     * @return admin/adminbook
+     * @throws Exception
      */
     @RequestMapping(value = "/book/addbook", method = RequestMethod.GET)
     public ModelAndView addBook() throws Exception {
@@ -48,7 +51,12 @@ public class BookController {
     }
 
     /**
-     * This method is used for "create" or "edit", based on the "id" value.
+     * This method handles the book/addbooksubmit URL, which is a form action coming from admin/adminbook.jsp.
+     * This is the new book page or the edit book page of the library management system, where a librarian can add a
+     * new book to the database or update book details.
+     * AddBookFormBean is used to capture form data.
+     * @return admin/adminbook
+     * @throws Exception
      */
     @RequestMapping (value = "book/addbooksubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView addBookSubmit(@Valid AddBookFormBean form, BindingResult bindingResult) throws Exception {
@@ -102,6 +110,12 @@ public class BookController {
         return response;
     }
 
+    /**
+     * This method handles the book/editbook URL, which could have the book title.
+     * @param title is the title of the book to be edited.
+     * @return admin/adminbook
+     * @throws Exception
+     */
     @RequestMapping (value = "/book/editbook", method = RequestMethod.GET)
     public ModelAndView editBook(@RequestParam("title") String title) throws Exception {
 

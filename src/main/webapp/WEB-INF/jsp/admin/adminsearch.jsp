@@ -75,7 +75,7 @@
                 <tbody id="books">
                 <c:forEach items="${checkedoutuserbooks}" var="checkedoutuserbook">
                     <tr>
-                        <td><img src="${checkedoutuserbook.book.img}" alt="Book Cover Thumbnail"/></td>
+                        <td><img src="${checkedoutuserbook.book.img}" alt="Book Cover Thumbnail" class="bookimg"/></td>
                         <td>${checkedoutuserbook.book.title}</td>
                         <td>${checkedoutuserbook.book.author}</td>
                         <td>${checkedoutuserbook.dueDate}</td>
@@ -101,7 +101,7 @@
                 <tbody id="books">
                 <c:forEach items="${availablebooks}" var="availablebook">
                     <tr>
-                        <td><img src="${availablebook.img}" alt="Book Cover Thumbnail"/></td>
+                        <td><img src="${availablebook.img}" alt="Book Cover Thumbnail" class="bookimg"/></td>
                         <td>${availablebook.title}</td>
                         <td>${availablebook.author}</td>
                     </tr>
@@ -126,7 +126,7 @@
                 <tbody id="books">
                 <c:forEach items="${checkedoutauthors}" var="checkedoutauthor">
                     <tr>
-                        <td><img src="${checkedoutauthor.book.img}" alt="Book Cover Thumbnail"/></td>
+                        <td><img src="${checkedoutauthor.book.img}" alt="Book Cover Thumbnail" class="bookimg"/></td>
                         <td>${checkedoutauthor.book.title}</td>
                         <td>${checkedoutauthor.book.author}</td>
                         <td>${checkedoutauthor.dueDate}</td>
@@ -152,7 +152,7 @@
                 <tbody id="books">
                 <c:forEach items="${availableauthors}" var="availableauthor">
                     <tr>
-                        <td><img src="${availableauthor.img}" alt="Book Cover Thumbnail"/></td>
+                        <td><img src="${availableauthor.img}" alt="Book Cover Thumbnail" class="bookimg"/></td>
                         <td>${availableauthor.title}</td>
                         <td>${availableauthor.author}</td>
                     </tr>
@@ -177,7 +177,7 @@
                 <tbody id="books">
                 <c:forEach items="${userbooks}" var="userbook">
                     <tr>
-                        <td><img src="${userbook.book.img}" alt="Book Cover Thumbnail"/></td>
+                        <td><img src="${userbook.book.img}" alt="Book Cover Thumbnail" class="bookimg"/></td>
                         <td>${userbook.book.title}</td>
                         <td>${userbook.book.author}</td>
                         <td>${userbook.dueDate}</td>

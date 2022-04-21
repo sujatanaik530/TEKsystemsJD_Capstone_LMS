@@ -39,7 +39,6 @@ public class AdminUserControlFormBean {
     private String state;
 
     @NotBlank (message = "Please enter a zip code.")
-    //@Length (min = 5, max = 5, message = "Zip code must be 5 digits.")
     @Pattern(regexp = "[0-9]{5}", message = "Please enter a valid zip code using 5 digits.")
     private String zip;
 

@@ -18,12 +18,17 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@PreAuthorize("hasAuthority('ADMIN')") // class level, can also be method level
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
     BookDAO bookDao;
 
+    /**
+     * This method handles the admin/adminsearch URL which shows the admin/adminsearch.jsp file.
+     * @return admin/adminsearch
+     * @throws Exception
+     */
     @RequestMapping(value="/admin/adminsearch", method= RequestMethod.GET)
     public ModelAndView adminSearch() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -32,6 +37,14 @@ public class AdminController {
         return response;
     }
 
+    /**
+     * This method handles the admin/searchtitle URL which may have a search term for searching from the
+     * books table by title containing the search term.
+     * This URL originates in admin/adminbook.jsp, where the admin might search for a book by title.
+     * @param search term in titles of books table
+     * @return admin/adminbook
+     * @throws Exception
+     */
     @GetMapping(value="/admin/searchtitle")
     public ModelAndView searchByTitle(@RequestParam(required=false, name="searchT") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -58,6 +71,14 @@ public class AdminController {
         return response;
     }
 
+    /**
+     * This method handles the admin/searchauthor URL which may have a search term for searching from the
+     * books table by author name containing the search term.
+     * This URL originates in admin/adminbook.jsp, where the admin might search for a book by author.
+     * @param search term in author names of books table
+     * @return admin/adminbook
+     * @throws Exception
+     */
     @GetMapping(value="/admin/searchauthor")
     public ModelAndView searchByAuthor(@RequestParam(required=false, name="searchA") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -84,6 +105,14 @@ public class AdminController {
         return response;
     }
 
+    /**
+     * This method handles the admin/searchcategory URL which may have a search term for searching from the
+     * books table by category name containing the search term.
+     * This URL originates in admin/adminbook.jsp, where the admin might search for a book by category.
+     * @param search term in category names of books table
+     * @return admin/adminbook
+     * @throws Exception
+     */
     @GetMapping(value="/admin/searchcategory")
     public ModelAndView searchByCategory(@RequestParam(required=false, name="searchC") String search) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -110,6 +139,11 @@ public class AdminController {
         return response;
     }
 
+    /**
+     * This method handles the admin/adminuser URL. The rest of the functionality on the JSP is in the UserController class.
+     * @return admin/adminuser
+     * @throws Exception
+     */
     @RequestMapping(value="/admin/adminuser", method= RequestMethod.GET)
     public ModelAndView adminUser() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -118,6 +152,11 @@ public class AdminController {
         return response;
     }
 
+    /**
+     * This method handles the admin/adminbook URL. The rest of the functionality on the JSP is in the BookController class.
+     * @return admin/adminbook
+     * @throws Exception
+     */
     @RequestMapping(value="/admin/adminbook", method= RequestMethod.GET)
     public ModelAndView adminBook() throws Exception {
         ModelAndView response = new ModelAndView();

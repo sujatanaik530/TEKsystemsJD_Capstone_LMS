@@ -50,8 +50,13 @@ public class UserController {
     private UserRoleDAO userRoleDao;
 
     /**
-     * This method is for editing a user's information. There is a path parameter being used to pass the userid
+     * This method handles the user/edit URL.
+     * It is for editing a user's information. There is a request parameter being used to pass the user email
      * from the user to be edited.
+     *
+     * @param email
+     * @return admin/adminuser for an admin, user/useredit otherwise
+     * @throws Exception
      */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping (value = "/user/edit", method = RequestMethod.GET) /* This is the URL part after localhost:8080. */
@@ -127,8 +132,13 @@ public class UserController {
     }
 
     /**
-     * This method handles the localhost:8080/login/userregistrationsubmit.
-     * This is the processing of the submit of the user registration page of the library management system.
+     * This method handles the login/userregistrationsubmit URL.
+     * This is the processing of the submit of the user information edit page of the LMS.
+     * This is only accessed by the user, not the admin.
+     * @param form
+     * @param bindingResult
+     * @return user/usersearch
+     * @throws Exception
      */
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping (value = "user/usereditsubmit", method = {RequestMethod.POST, RequestMethod.GET})
@@ -195,6 +205,15 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the admin/usereditsubmit URL.
+     * This is the processing of the submit of the user information edit page of the LMS.
+     * This is only accessed by the admin, not the user.
+     * @param form
+     * @param bindingResult
+     * @return admin/adminuser
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping (value = "admin/usereditsubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView adminEditSubmit(@Valid AdminUserControlFormBean form, BindingResult bindingResult) throws Exception {
@@ -255,6 +274,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the user/usercheckouts URL, which displays a user's current checkouts.
+     * @return user/usercheckouts
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value="/user/usercheckouts", method= RequestMethod.GET)
     public ModelAndView checkouts() throws Exception {
@@ -280,6 +304,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the user/checkout URL, which may have a book title as the request parameter.
+     * @param title The title of the book to be checked out
+     * @return user/usercheckouts
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @RequestMapping(value = "/user/checkout", method = RequestMethod.GET)
     public ModelAndView checkoutBook(@RequestParam(required=false, name="title") String title) throws Exception {
@@ -365,6 +395,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the user/renew URL, which may have the title of the boo to be renewed.
+     * @param title the title of the book to be renewed
+     * @return user/usercheckouts
+     * @throws Exception
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping(value = "/user/renew", method = RequestMethod.GET)
     public ModelAndView renewBook(@RequestParam(required=false, name="title") String title) throws Exception {
@@ -403,6 +439,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the user/return URL, which may have the title of the book to be renewed.
+     * @param title the title of the book to be renewed
+     * @return user/usercheckouts
+     * @throws Exception
+     */
     @Transactional
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @RequestMapping(value = "/user/return", method = RequestMethod.GET)
@@ -444,6 +486,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the user/adduser URL. It is accessible only by an admin.
+     * @return admin/adminuser
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/adduser", method= RequestMethod.GET)
     public ModelAndView addUser() throws Exception {
@@ -457,6 +504,13 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the /user/searchuserbyfirstname URL, which may have a user's first name as a request
+     * parameter. It is accessible only by an admin.
+     * @param fname term used for searching by first name in the users table
+     * @return admin/adminuser
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbyfirstname", method= RequestMethod.GET)
     public ModelAndView searchUserByFirstName(@RequestParam(name = "searchFN", required = false) String fname) throws Exception {
@@ -481,6 +535,13 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the /user/searchuserbylastname URL, which may have a user's last name as a request
+     * parameter. It is accessible only by an admin.
+     * @param lname term used for searching by last name in the users table
+     * @return admin/adminuser
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbylastname", method= RequestMethod.GET)
     public ModelAndView searchUserByLastName(@RequestParam(name = "searchLN", required = false) String lname) throws Exception {
@@ -505,6 +566,13 @@ public class UserController {
         return response;
     }
 
+    /**
+     * This method handles the /user/searchuserbyemail URL, which may have a user's email as a request
+     * parameter. It is accessible only by an admin.
+     * @param email term used for searching by email in the users table
+     * @return
+     * @throws Exception
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/user/searchuserbyemail", method= RequestMethod.GET)
     public ModelAndView searchUserByEmail(@RequestParam(name = "searchEmail", required = false) String email) throws Exception {

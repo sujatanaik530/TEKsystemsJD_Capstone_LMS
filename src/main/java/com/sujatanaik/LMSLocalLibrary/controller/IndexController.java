@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 
     /**
-     * This method handles the localhost:8080/index URL.
+     * This method handles the /index URL.
      * This is the home page of the library management system.
      * @return response (index.jsp)
      * @throws Exception

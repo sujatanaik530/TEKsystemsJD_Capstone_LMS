@@ -34,12 +34,11 @@ public class LoginController {
     private UserRoleDAO userRoleDao;
 
     /**
-     * This method handles the localhost:8080/login/userlogin.
-     * This is the user login page of the library management system.
-     *
-     * NOT USED ANYMORE
+     * This method handles the login/login/{msg} URL. It is only accessed by clicking the login button on the home page.
+     * @param msg is hardcoded as 'Welcome!' in index.js to fulfill the rubric requirement of using @PathVariable.
+     * @return /index if an already logged in user tries to access the login page, otherwise /login/userlogin.
+     * @throws Exception
      */
-
     @RequestMapping(value="/login/login/{msg}", method = RequestMethod.GET)
     public ModelAndView login(@PathVariable("msg") String msg) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -59,6 +58,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * This method handles the login/login URL, which is the default login URL specified in SecurityConfig.java.
+     * @return /index if an already logged in user tries to access the login page, otherwise /login/userlogin.
+     * @throws Exception
+     */
     @RequestMapping(value="/login/login", method = RequestMethod.GET)
     public ModelAndView loginAfterRegistering() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -77,6 +81,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * This method handles the login/userlogin URL.
+     * @return login/userlogin
+     * @throws Exception
+     */
     @RequestMapping(value="/login/userlogin", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -86,10 +95,11 @@ public class LoginController {
     }
 
     /**
-     * This method handles the localhost:8080/login/userregistration.
-     * This is the user registration page of the library management system.
+     * This method handles the login/userregistration URL, which is the user registration page of the LMS, accessed
+     * from the home page.
+     * @return /index if an already logged in user tries to access the login page, otherwise /login/userregistration.
+     * @throws Exception
      */
-
     @RequestMapping(value="/login/userregistration", method= RequestMethod.GET)
     public ModelAndView registration() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -114,8 +124,12 @@ public class LoginController {
     }
 
     /**
-     * This method handles the localhost:8080/login/userregistrationsubmit.
-     * This is the processing of the submit of the user registration page of the library management system.
+     * This method handles the login/userregistrationsubmit URL. This is the processing of the submit of the user
+     * registration form of the LMS.
+     * @param form
+     * @param bindingResult
+     * @return login/login
+     * @throws Exception
      */
     @RequestMapping (value = "login/userregistrationsubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView registrationSubmit(@Valid PatronRegisterFormBean form, BindingResult bindingResult) throws Exception {

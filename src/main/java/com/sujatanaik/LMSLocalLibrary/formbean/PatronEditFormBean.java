@@ -27,8 +27,6 @@ public class PatronEditFormBean {
     private String lname;
 
     @NotBlank (message = "Please enter a password.")
-    //@Pattern(regexp = "[a-zA-Z]", message = "Password must have at least one alphabet")
-    //@Pattern(regexp = "[0-9]", message = "Password must have at least one digit.")
     @Length(min = 3, max = 15, message = "Password must be between 3 and 15 characters in length.")
     private String password;
 
@@ -48,7 +46,6 @@ public class PatronEditFormBean {
     private String state;
 
     @NotBlank (message = "Please enter a zip code.")
-    //@Length (min = 5, max = 5, message = "Zip code must be 5 digits.")
     @Pattern(regexp = "[0-9]{5}", message = "Please enter a valid zip code using 5 digits.")
     private String zip;
 
