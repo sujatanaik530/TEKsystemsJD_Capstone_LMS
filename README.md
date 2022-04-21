@@ -19,6 +19,7 @@ what a specific user has checked out currently etc.)
 Library users are able to:
 - edit their account information
 - run basic searches (e.g. search books by title, author or category)
+- checkout books
 - view their current checkouts
 - return books
 - renew books
