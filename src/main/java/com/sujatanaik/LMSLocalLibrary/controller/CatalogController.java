@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -31,8 +30,7 @@ public class CatalogController {
     private UserBookDAO userBookDao;
 
     /**
-     * This method handles the goodreads URL, which just displays all the books in the books table. I want to implement a
-     * random book recommender here.
+     * This method handles the goodreads URL, which displays 5 randomly picked books from the catalog.
      * @return goodreads
      * @throws Exception
      */
@@ -40,10 +38,20 @@ public class CatalogController {
     public ModelAndView goodReads() throws Exception {
         ModelAndView response = new ModelAndView();
 
+        Random randNum = new Random();
+
         log.info("In CatalogController - goodReads()");
 
         List<Book> books = bookDao.findAll();
-        response.addObject("books", books);
+
+        Set<Integer> setOfBooks = new LinkedHashSet<Integer>();
+        while (setOfBooks.size() < 5) {
+            setOfBooks.add(randNum.nextInt(books.size())+1);
+        }
+        List<Book> randomBooks = new ArrayList<>();
+        setOfBooks.forEach(i -> randomBooks.add(books.get(i)));
+
+        response.addObject("books", randomBooks);
 
         response.setViewName("goodreads");
 
