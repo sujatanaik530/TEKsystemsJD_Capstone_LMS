@@ -40,10 +40,10 @@
                 </div>
                 <div class="col-md-4">
                     <select id="searchBy" class="form-select border border-2 border-dark" name="searchBy">
-                        <option value="Checked Out Titles">Checked Out Titles</option>
-                        <option value="Available Titles">Available Titles</option>
-                        <option value="Checked Out Authors">Checked Out Authors</option>
-                        <option value="Available Authors">Available Authors</option>
+                        <option value="Checked Out By Title">Checked Out By Title</option>
+                        <option value="Available By Title">Available By Title</option>
+                        <option value="Checked Out By Author">Checked Out By Author</option>
+                        <option value="Available By Author">Available By Author</option>
                         <option value="Checked Out By User">Checked Out By User</option>
                     </select>
                 </div>

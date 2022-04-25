@@ -9,19 +9,19 @@ function goSearchResults() {
         let fullURL = "../catalog/checkedoutbyuser?search=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
-    else if (searchBy == "Available Titles") {
+    else if (searchBy == "Available By Title") {
         let fullURL = "../catalog/availabletitles?search=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
-    else if (searchBy == "Checked Out Titles") {
+    else if (searchBy == "Checked Out By Title") {
         let fullURL = "../catalog/checkedouttitles?search=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
-    else if (searchBy == "Available Authors") {
+    else if (searchBy == "Available By Author") {
         let fullURL = "../catalog/availableauthors?search=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }
-    else if (searchBy == "Checked Out Authors") {
+    else if (searchBy == "Checked Out By Author") {
         let fullURL = "../catalog/checkedoutauthors?search=" + encodeURIComponent(searchText.value);
         location.assign(fullURL);
     }

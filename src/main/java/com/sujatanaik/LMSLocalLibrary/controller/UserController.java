@@ -521,7 +521,7 @@ public class UserController {
         if (!StringUtils.isBlank(fname)) {
             users = userDao.findByFirstNameIgnoreCaseContaining(fname);
             if (users.isEmpty()) {
-                response.addObject("message", "Your search for \"" + fname + "\" returned no results");
+                response.addObject("message", "Your search for user with first name containing \"" + fname + "\" returned no results.");
             }
             response.addObject("libusers", users);
         }
@@ -552,7 +552,7 @@ public class UserController {
         if (!StringUtils.isBlank(lname)) {
             users = userDao.findByLastNameIgnoreCaseContaining(lname);
             if (users.isEmpty()) {
-                response.addObject("message", "Your search for \"" + lname + "\" returned no results");
+                response.addObject("message", "Your search for user with last name containing \"" + lname + "\" returned no results.");
             }
             response.addObject("libusers", users);
         }
@@ -583,7 +583,7 @@ public class UserController {
         if (!StringUtils.isBlank(email)) {
             user = userDao.findByEmail(email);
             if (user == null) {
-                response.addObject("message", "Your search for \"" + email + "\" returned no results");
+                response.addObject("message", "Your search for user with email \"" + email + "\" returned no results.");
             }
             response.addObject("libuser", user);
         }

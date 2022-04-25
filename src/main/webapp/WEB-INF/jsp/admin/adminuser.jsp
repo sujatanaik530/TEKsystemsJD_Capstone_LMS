@@ -247,7 +247,7 @@
                             <div>
                                 <label for="phone" class="form-label">Telephone:</label>
                                 <input type="text" class="form-control border border-2 border-dark" id="phone"
-                                       placeholder="xxx-xxx-xxxx" name="phone" value="${userform.phone}"/>
+                                       placeholder="xxxxxxxxxx" name="phone" value="${userform.phone}"/>
                                 <p class="hiddenMsg"></p>
                                 <c:forEach items="${bindingResult.getFieldErrors('phone')}" var="error">
                                     <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>

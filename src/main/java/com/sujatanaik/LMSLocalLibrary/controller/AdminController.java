@@ -56,7 +56,7 @@ public class AdminController {
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByTitleIgnoreCaseContaining(search);
             if (books.isEmpty()) {
-                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+                response.addObject("message", "Your search for \"" + search + "\" in book titles returned no results.");
             }
             response.addObject("books", books);
         }
@@ -90,7 +90,7 @@ public class AdminController {
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByAuthorIgnoreCaseContaining(search);
             if (books.isEmpty()) {
-                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+                response.addObject("message", "Your search for \"" + search + "\" in author names returned no results.");
             }
             response.addObject("books", books);
         }
@@ -124,7 +124,7 @@ public class AdminController {
         if (!StringUtils.isBlank(search)) {
             books = bookDao.findByCategoryIgnoreCaseContaining(search);
             if (books.isEmpty()) {
-                response.addObject("message", "Your search for \"" + search + "\" returned no results");
+                response.addObject("message", "Your search for \"" + search + "\" in category names returned no results.");
             }
             response.addObject("books", books);
         }
