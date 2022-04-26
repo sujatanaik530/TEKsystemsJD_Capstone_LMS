@@ -46,7 +46,7 @@ public class CatalogController {
 
         Set<Integer> setOfBooks = new LinkedHashSet<Integer>();
         while (setOfBooks.size() < 5) {
-            setOfBooks.add(randNum.nextInt(books.size())+1);
+            setOfBooks.add(randNum.nextInt(books.size()));
         }
         List<Book> randomBooks = new ArrayList<>();
         setOfBooks.forEach(i -> randomBooks.add(books.get(i)));

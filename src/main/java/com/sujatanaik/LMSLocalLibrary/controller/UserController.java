@@ -298,6 +298,7 @@ public class UserController {
             return response;
         }
 
+        response.addObject("message", "You have " + userBooks.size() + " books checked out.");
         response.addObject("borrowed", userBooks);
 
         response.setViewName("user/usercheckouts");

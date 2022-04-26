@@ -40,10 +40,6 @@ tfoot tr td:last-child {
     border-bottom-right-radius: 10px;
 }
 
-tr td:nth-child(2):not(.foot) {
-    border: 1px solid;
-}
-
 tr {
     border-left: 1px solid;
     border-right: 1px solid;
@@ -80,11 +76,19 @@ tr {
     width: 10%;
 }
 
-.ratio5 {
-    width: 50%;
+.ratio2 {
+    width: 20%;
+}
+
+.ratio3 {
+    width: 30%;
 }
 
 .ratio4 {
     width: 40%;
+}
+
+.ratio5 {
+    width: 50%;
 }
 

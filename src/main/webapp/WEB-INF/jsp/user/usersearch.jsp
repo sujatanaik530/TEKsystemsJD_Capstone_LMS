@@ -74,10 +74,15 @@
             <c:forEach items="${books}" var="book">
                 <tr>
                     <td class="ratio1"><img src="${book.img}" class="bookimg"/></td>
-                    <td class="ratio5 titlecol">${book.title}</td>
-                    <td class="ratio4">${book.author}</td>
-                    <td>
+                    <td class="ratio4 titlecol">${book.title}</td>
+                    <td class="ratio3">${book.author}</td>
+                    <td class="ratio2">
+                        <c:if test="${book.status == 'AVAILABLE'}">
                         <input type="button" class="checkoutbook" value="Check Out">
+                        </c:if>
+                        <c:if test="${book.status == 'CHECKEDOUT'}">
+                            Currently checked out
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
