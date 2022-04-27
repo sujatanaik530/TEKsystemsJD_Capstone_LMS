@@ -38,14 +38,14 @@
                     <input type="text" class="form-control border border-2 border-dark" id="search"
                            placeholder="Enter search term" name="search" value="${search}" />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select id="searchBy" class="form-select border border-2 border-dark" name="searchBy">
                         <option value="First Name">First Name</option>
                         <option value="Last Name">Last Name</option>
                         <option value="Email">Email</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <button type="button" id="searchButton" class="btn btn-dark">Search</button>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="row m-2 p-2">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label for="inputCity" class="form-label">City</label>
                                 <input type="text" class="form-control border border-2 border-dark" id="inputCity"
                                        name="city" value="${userform.city}" />
@@ -222,7 +222,7 @@
                                     <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
                                 </c:forEach>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="inputZip" class="form-label">Zip</label>
                                 <input type="text" class="form-control border border-2 border-dark" id="inputZip"
                                        name="zip" value="${userform.zip}" />

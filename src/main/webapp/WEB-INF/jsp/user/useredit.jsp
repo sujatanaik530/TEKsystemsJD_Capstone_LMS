@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="row m-2 p-2">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label for="inputCity" class="form-label">City</label>
                         <input type="text" class="form-control border border-2 border-dark" id="inputCity"
                                name="city" value="${form.city}" />
@@ -106,7 +106,7 @@
                             <div style="color: red;font-size: smaller;">${error.getDefaultMessage()}</div>
                         </c:forEach>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="inputZip" class="form-label">Zip</label>
                         <input type="text" class="form-control border border-2 border-dark" id="inputZip"
                                name="zip" value="${form.zip}" />
